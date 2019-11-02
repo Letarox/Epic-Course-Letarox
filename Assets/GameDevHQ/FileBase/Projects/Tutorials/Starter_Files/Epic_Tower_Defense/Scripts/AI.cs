@@ -19,6 +19,7 @@ public class AI : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _target = GameObject.Find("Player_Base");
         _agent.SetDestination(_target.transform.position);
+        Debug.Log("Working... " + transform.name);
     }
 
     void Update()

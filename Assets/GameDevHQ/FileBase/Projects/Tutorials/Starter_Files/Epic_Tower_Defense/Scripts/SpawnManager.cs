@@ -21,7 +21,7 @@ public class SpawnManager : MonoBehaviour
     }
 
     [SerializeField]
-    private Transform _spawnLocation, _playerBase;
+    private Transform _spawnLocation;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
