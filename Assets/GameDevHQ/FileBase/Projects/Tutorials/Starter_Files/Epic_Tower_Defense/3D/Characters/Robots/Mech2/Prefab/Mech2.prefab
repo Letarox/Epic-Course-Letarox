@@ -414,10 +414,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
   _enemy:
-    _speed: 1.5
     type: 1
     health: 150
     warfunds: 50
+    eType: 1
 --- !u!195 &7738018559533541121
 NavMeshAgent:
   m_ObjectHideFlags: 0

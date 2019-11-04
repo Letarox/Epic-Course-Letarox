@@ -5,10 +5,18 @@ using UnityEngine;
 [System.Serializable]
 public class Enemy
 {
-    [SerializeField]
-    private float _speed = 1.5f;
-    public int type;
     public int health;
     public int warfunds;
+    public EnemyType eType;
+    
+    public enum EnemyType
+    {
+        TallMech, // int 0
+        BigMech // int 1
+    }
 
+    public EnemyType ReturnEnemyType()
+    {
+        return eType;
+    }
 }

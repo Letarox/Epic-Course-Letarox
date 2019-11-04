@@ -8,24 +8,42 @@ public class AI : MonoBehaviour
     [SerializeField]
     private GameObject _target;
     private NavMeshAgent _agent;
-    public Enemy _enemy;
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private Enemy _enemy;
+
+    private Player _player;
 
     void OnEnable()
     {
         _agent = GetComponent<NavMeshAgent>();
         _target = GameObject.Find("Player_Base");
-        _agent.SetDestination(_target.transform.position);
-        Debug.Log("Working... " + transform.name);
+        if (_target == null)
+        {
+            Debug.LogError("Player base is NULL on enemy: " + transform.name);
+        }
+        else
+        {
+            _agent.SetDestination(_target.transform.position);
+        }
+
+        _player = GameObject.Find("Main Camera").GetComponent<Player>();
+
+        if (_player == null)
+        {
+            Debug.LogError("Player is null on enemy: " + transform.name);
+        }
     }
 
     void Update()
     {
-        if(_enemy.health <= 0)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
+            _enemy.health -= 10;
+        }
+
+        if (_enemy.health <= 0)
+        {
+            _player.AddFunds(_enemy.warfunds);
             Hide();
         }
     }
@@ -34,4 +52,11 @@ public class AI : MonoBehaviour
     {
         this.gameObject.SetActive(false);
     }
+
+    public int ReturnEnemyType()
+    {
+        return (int)_enemy.eType;
+    }
+    
+
 }

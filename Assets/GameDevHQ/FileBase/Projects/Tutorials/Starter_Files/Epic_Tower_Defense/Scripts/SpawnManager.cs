@@ -2,24 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager : MonoSingleton<SpawnManager>
 {
-    private static SpawnManager _instance;
-    public static SpawnManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-                Debug.LogError("Instance is NULL on the SpawnManager");
-
-            return _instance;
-        }
-    }
-    void Awake()
-    {
-        _instance = this;
-    }
-
     [SerializeField]
     private Transform _spawnLocation;
     [SerializeField]
@@ -72,7 +56,7 @@ public class SpawnManager : MonoBehaviour
         foreach(var enemy in _enemiesPool)
         {
             AI enemyAI = enemy.GetComponent<AI>();
-            if(enemy.activeInHierarchy == false && enemyAI._enemy.type == type)
+            if(enemy.activeInHierarchy == false && enemyAI.ReturnEnemyType() == type)
             {
                 enemy.SetActive(true);
                 return enemy;
