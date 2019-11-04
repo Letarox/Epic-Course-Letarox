@@ -105,7 +105,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 0.7
     agentHeight: 1.5
     agentSlope: 45
     agentClimb: 0.53
@@ -113,13 +113,13 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.23333333
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 0b8fd73d028dc7541afb1a116ed0148d, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 9f9075e14bcf4ba40a7a7fbf0ec743a4, type: 2}
 --- !u!1 &12562994
 GameObject:
   m_ObjectHideFlags: 0
@@ -4721,6 +4721,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnLocation: {fileID: 1665311045}
   _enemyContainer: {fileID: 960275112}
+  _enemiesInitialWave: 10
   _enemiesPrefabs:
   - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
   - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
@@ -8391,7 +8392,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1665311044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -43, y: 1, z: 0.5}
+  m_LocalPosition: {x: -43, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1634851837}
@@ -10184,7 +10185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3dac35fc7db3c4796b9a8d62cc0fa4a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16.82
+      value: 16.2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3dac35fc7db3c4796b9a8d62cc0fa4a0, type: 3}
       propertyPath: m_LocalPosition.z

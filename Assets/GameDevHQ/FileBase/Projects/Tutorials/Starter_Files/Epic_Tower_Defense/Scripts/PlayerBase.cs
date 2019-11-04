@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBase : MonoBehaviour
 {
     private Player _player;
-    void Start()
+    private void Start()
     {
         _player = GameObject.Find("Main Camera").GetComponent<Player>();
         if (_player == null)

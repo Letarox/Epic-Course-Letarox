@@ -10,16 +10,6 @@ public class Player : MonoBehaviour
     private int _lives = 5;
 
     private bool _isGameOver = false;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void AddFunds(int fundsAmount)
     {

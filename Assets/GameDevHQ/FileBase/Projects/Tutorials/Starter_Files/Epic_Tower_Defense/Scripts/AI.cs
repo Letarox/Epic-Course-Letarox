@@ -9,11 +9,13 @@ public class AI : MonoBehaviour
     private GameObject _target;
     private NavMeshAgent _agent;
     [SerializeField]
+    private float _speed;
+    [SerializeField]
     private Enemy _enemy;
 
-    private Player _player;
+    private Player _player;    
 
-    void OnEnable()
+    private void OnEnable()
     {
         _agent = GetComponent<NavMeshAgent>();
         _target = GameObject.Find("Player_Base");
@@ -32,9 +34,11 @@ public class AI : MonoBehaviour
         {
             Debug.LogError("Player is null on enemy: " + transform.name);
         }
+
+        _speed = _agent.speed;
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -57,6 +61,10 @@ public class AI : MonoBehaviour
     {
         return (int)_enemy.eType;
     }
-    
+
+    private void OnValidate()
+    {
+        _agent.speed = _speed;
+    }
 
 }

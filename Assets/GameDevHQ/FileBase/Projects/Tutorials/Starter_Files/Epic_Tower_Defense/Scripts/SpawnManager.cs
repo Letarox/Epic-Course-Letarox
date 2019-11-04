@@ -8,22 +8,22 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     private Transform _spawnLocation;
     [SerializeField]
     private GameObject _enemyContainer;
+
+    [SerializeField]
+    private int _enemiesInitialWave;
+
     [SerializeField]
     private List<GameObject> _enemiesPrefabs;
     [SerializeField]
     private List<GameObject> _enemiesPool;
 
     private int waveNumber = 1;
-    
-    void Start()
-    {
-        _enemiesPool = GenerateEnemies(10);
-        StartCoroutine(WaveSpawn());
-    }
 
-    void Update()
+
+    private void Start()
     {
-        
+        _enemiesPool = GenerateEnemies(_enemiesInitialWave);
+        StartCoroutine(WaveSpawn());
     }
 
     IEnumerator WaveSpawn()
