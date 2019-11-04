@@ -1493,9 +1493,10 @@ GameObject:
   - component: {fileID: 95831276238310704}
   - component: {fileID: 7519403940194994152}
   - component: {fileID: 2287022691413864381}
+  - component: {fileID: 8383812779289221442}
   m_Layer: 0
   m_Name: Mech1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1549,10 +1550,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
   _enemy:
-    _speed: 1.5
-    type: 0
     health: 100
     warfunds: 30
+    eType: 0
 --- !u!195 &2287022691413864381
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1563,7 +1563,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 1.5
+  m_Speed: 2.2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1575,6 +1575,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &8383812779289221442
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637921026644932}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1695296882317140
 GameObject:
   m_ObjectHideFlags: 0

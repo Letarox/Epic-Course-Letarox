@@ -48,7 +48,7 @@ public class AI : MonoBehaviour
         }
     }
 
-    void Hide()
+    public void Hide()
     {
         this.gameObject.SetActive(false);
     }
