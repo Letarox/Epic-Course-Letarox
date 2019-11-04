@@ -14,9 +14,4 @@ public class Enemy
         TallMech, // int 0
         BigMech // int 1
     }
-
-    public EnemyType ReturnEnemyType()
-    {
-        return eType;
-    }
 }

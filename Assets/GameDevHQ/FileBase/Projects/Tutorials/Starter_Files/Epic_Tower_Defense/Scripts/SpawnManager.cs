@@ -59,14 +59,16 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             if(enemy.activeInHierarchy == false && enemyAI.ReturnEnemyType() == type)
             {
                 enemy.SetActive(true);
+                enemy.transform.position = _spawnLocation.position;
                 return enemy;
             }
         }
 
-        GameObject newEnemy = Instantiate(_enemiesPrefabs[type]);
+        GameObject newEnemy = Instantiate(_enemiesPrefabs[type], _spawnLocation);
         newEnemy.transform.parent = _enemyContainer.transform;
         newEnemy.SetActive(true);
         _enemiesPool.Add(newEnemy);
+        newEnemy.transform.position = _spawnLocation.position;
 
         return newEnemy;
     }
