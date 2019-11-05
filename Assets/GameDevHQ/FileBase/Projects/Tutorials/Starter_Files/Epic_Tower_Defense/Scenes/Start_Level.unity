@@ -1126,7 +1126,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 4294967263
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4162722737524506, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1559,6 +1563,10 @@ PrefabInstance:
     - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4162722737524506, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2377,6 +2385,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building3 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4114687276565046, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11.84553
@@ -3138,6 +3150,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 1559187126469112, guid: 35b159eeb1cb443b4a741575a12cdcf5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4495428606044280, guid: 35b159eeb1cb443b4a741575a12cdcf5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.5719385
@@ -3375,6 +3391,10 @@ PrefabInstance:
     - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_Name
       value: Building3 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4114687276565046, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4526,6 +4546,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4114687276565046, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 26.559471
@@ -4740,6 +4764,10 @@ PrefabInstance:
     - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_Name
       value: Building3 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4114687276565046, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5357,6 +5385,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4162722737524506, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.02729702
@@ -5411,6 +5443,10 @@ PrefabInstance:
     - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_Name
       value: Building3 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4114687276565046, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5740,6 +5776,10 @@ PrefabInstance:
     - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_Name
       value: Building3 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4114687276565046, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6139,6 +6179,10 @@ PrefabInstance:
     - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4162722737524506, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6553,6 +6597,10 @@ PrefabInstance:
     - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_Name
       value: Building3 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4114687276565046, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7097,6 +7145,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4162722737524506, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.02729702
@@ -7147,6 +7199,10 @@ PrefabInstance:
     - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4162722737524506, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8529,6 +8585,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4162722737524506, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.02729702
@@ -9126,6 +9186,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4162722737524506, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.02729702
@@ -9385,6 +9449,10 @@ PrefabInstance:
     - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_Name
       value: Building3 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4114687276565046, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9752,6 +9820,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4162722737524506, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.02729702
@@ -9857,6 +9929,10 @@ PrefabInstance:
     - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_Name
       value: Building3 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608588648407418, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4114687276565046, guid: 6758f8713d0664371b044fc62ef04b0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10331,6 +10407,10 @@ PrefabInstance:
     - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875719240139056, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4162722737524506, guid: e5b7fc5cfb54942c4b803bb28050ee2d, type: 3}
       propertyPath: m_LocalPosition.x

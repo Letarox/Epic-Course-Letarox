@@ -19,5 +19,12 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T
     private void Awake()
     {
         _instance = (T)this;
+
+        Init();
+    }
+
+    public virtual void Init()
+    {
+
     }
 }
