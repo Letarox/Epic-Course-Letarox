@@ -13,7 +13,7 @@ public class AI : MonoBehaviour
     [SerializeField]
     private Enemy _enemy;
 
-    private Player _player;    
+    private Player _player;
 
     private void OnEnable()
     {
