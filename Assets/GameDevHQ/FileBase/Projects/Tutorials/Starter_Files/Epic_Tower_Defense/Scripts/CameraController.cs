@@ -5,22 +5,21 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 5f;
-    private float _limitLeft = -38f, _limitRight = -34f, _limitUp = 27f, _limitDown = 12f;
-    private float _moveX, _moveY;
-    private Vector3 _cameraPos;
+    private float _speed = 10f;
+    private float _moveZ, _moveY;
     void Start()
     {
-        
+
     }
 
     void Update()
     {
         //get the input from WASD keys
-        _moveX = Input.GetAxis("Horizontal");
+        _moveZ = Input.GetAxis("Horizontal");
         _moveY = Input.GetAxis("Vertical");
 
         //move the camera based on the keys
-        transform.Translate(new Vector3(_moveX, _moveY, 0));
+        Vector3 pos = new Vector3(-_moveY, 0, _moveZ);
+        transform.Translate(pos * _speed * Time.deltaTime);
     }
 }
