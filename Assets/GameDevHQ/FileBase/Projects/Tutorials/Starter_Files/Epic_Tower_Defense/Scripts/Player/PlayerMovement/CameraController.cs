@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float _speed = 10f;
     private float _moveZ, _moveY;
+    private float _limitLeft = -7f, _limitRight = 12f, _limitTop = -30f, _limitBottom = 1f;
     void Start()
     {
 

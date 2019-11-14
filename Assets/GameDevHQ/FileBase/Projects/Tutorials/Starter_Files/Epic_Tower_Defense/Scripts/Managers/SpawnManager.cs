@@ -11,11 +11,20 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     [SerializeField]
     private int _enemiesInitialWave;
+    [SerializeField]
+    private int _towersInitially;
 
     [SerializeField]
     private List<GameObject> _enemiesPrefabs;
     [SerializeField]
     private List<GameObject> _enemiesPool;
+
+    [SerializeField]
+    private List<GameObject> _towersPrefabs;
+    [SerializeField]
+    private List<GameObject> _towersPool;
+    [SerializeField]
+    private GameObject _towerContainer;
 
     private int waveNumber = 1;
 
@@ -23,6 +32,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     private void Start()
     {
         _enemiesPool = GenerateEnemies(_enemiesInitialWave);
+        _towersPool = GenerateTower(_towersInitially);
         StartCoroutine(WaveSpawn());
     }
 
@@ -56,6 +66,8 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         foreach(var enemy in _enemiesPool)
         {
             AI enemyAI = enemy.GetComponent<AI>();
+            if (enemyAI == null)
+                Debug.LogError("EnemyAI is NULL on the Spawn Manager");
             if(enemy.activeInHierarchy == false && enemyAI.ReturnEnemyType() == type)
             {
                 enemy.SetActive(true);
@@ -71,5 +83,44 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         newEnemy.transform.position = _spawnLocation.position;
 
         return newEnemy;
+    }
+
+    List<GameObject> GenerateTower(int amountOfTowers)
+    {
+        for (int i = 0; i < amountOfTowers; i++)
+        {
+            int random = Random.Range(0, 2);
+            GameObject tower = Instantiate(_towersPrefabs[random]);
+            tower.transform.parent = _towerContainer.transform;
+            tower.SetActive(false);
+            _towersPool.Add(tower);
+        }
+
+        return _towersPool;
+    }
+
+    public GameObject RequestTower(int type, Vector3 target)
+    {
+        //check if the type is the same that we requested and return it
+        foreach (var tower in _towersPool)
+        {
+            TowerAI towerAI = tower.GetComponent<TowerAI>();
+            if (towerAI == null)
+                Debug.LogError("TowerAI is NULL on the Spawn Manager");
+            if (tower.activeInHierarchy == false && towerAI.GetTowerType() == type)
+            {
+                tower.SetActive(true);
+                tower.transform.position = target;
+                return tower;
+            }
+        }
+
+        GameObject newTower = Instantiate(_towersPrefabs[type], target, Quaternion.identity);
+        newTower.transform.parent = _towerContainer.transform;
+        newTower.SetActive(true);
+        _towersPool.Add(newTower);
+        newTower.transform.position = target;
+
+        return newTower;
     }
 }
