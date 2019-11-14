@@ -7,6 +7,7 @@ public class TowerSpot : MonoBehaviour
     private ParticleSystem _greenParticle, _redParticle;
     private bool _isUsed = false;
     private GameObject _spotTower = null;
+    private TowerAI _towerAI;
 
     [System.Obsolete]
     void Start()
@@ -24,12 +25,16 @@ public class TowerSpot : MonoBehaviour
     {
         TowerPlacement.onAvailableOn += TurnOnAvailable;
         TowerPlacement.onAvailableOff += TurnOffAvailable;
+        TowerPlacement.onSaleOn += TurOnForSale;
+        TowerPlacement.onSaleOff += TurOffForSale;
     }
 
     void OnDisable()
     {
         TowerPlacement.onAvailableOn -= TurnOnAvailable;
         TowerPlacement.onAvailableOff -= TurnOffAvailable;
+        TowerPlacement.onSaleOn -= TurOnForSale;
+        TowerPlacement.onSaleOff -= TurOffForSale;
     }
 
     void TurnOnAvailable()
@@ -56,6 +61,30 @@ public class TowerSpot : MonoBehaviour
         }
     }
 
+    void TurOnForSale()
+    {
+        if (_isUsed == true)
+        {
+            _greenParticle.Play();
+        }
+        else
+        {
+            _redParticle.Play();
+        }
+    }
+
+    void TurOffForSale()
+    {
+        if (_isUsed == true)
+        {
+            _greenParticle.Stop();
+        }
+        else
+        {
+            _redParticle.Stop();
+        }
+    }
+
     public bool GetSpotAvailability()
     {
         return _isUsed;
@@ -65,16 +94,19 @@ public class TowerSpot : MonoBehaviour
     {
         _isUsed = true;
         _spotTower = obj;
+        _towerAI = _spotTower.GetComponent<TowerAI>();
+        if (_towerAI == null)
+            Debug.LogError("TowerAI is NULL on " + transform.name);
     }
 
     public void SellTower()
     {
         _isUsed = false;
-        if (_spotTower.GetComponent<TowerAI>() != null)
-            _spotTower.GetComponent<TowerAI>().Hide();
+        _towerAI.Hide();
         _spotTower = null;
-        _redParticle.Stop();
-        _greenParticle.Play();
+        _towerAI = null;
+        _greenParticle.Stop();
+        _redParticle.Play();        
     }
 
     public void TurnColorOnClick()

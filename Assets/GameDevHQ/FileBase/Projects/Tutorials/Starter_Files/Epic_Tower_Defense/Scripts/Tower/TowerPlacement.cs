@@ -16,6 +16,8 @@ public class TowerPlacement : MonoBehaviour
 
     public static event Action onAvailableOn;
     public static event Action onAvailableOff;
+    public static event Action onSaleOn;
+    public static event Action onSaleOff;
 
     void Update()
     {
@@ -44,8 +46,8 @@ public class TowerPlacement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3) && _isSummoning == false && _isRemoving == false)
         {
             _isRemoving = true;
-            if (onAvailableOn != null)
-                onAvailableOn();
+            if (onSaleOn != null)
+                onSaleOn();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButton(1))
@@ -55,6 +57,8 @@ public class TowerPlacement : MonoBehaviour
             _activeTowerMouseDrag.SetActive(false);
             if (onAvailableOff != null)
                 onAvailableOff();
+            if (onSaleOff != null)
+                onSaleOff();
         }
 
         TowerSummon();
