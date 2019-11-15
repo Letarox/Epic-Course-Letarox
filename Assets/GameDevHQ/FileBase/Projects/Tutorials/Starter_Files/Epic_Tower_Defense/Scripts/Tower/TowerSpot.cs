@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TowerSpot : MonoBehaviour
 {
-    private ParticleSystem _greenParticle, _redParticle;
+    private ParticleSystem _greenParticle;
     private bool _isUsed = false;
     private GameObject _spotTower = null;
     private TowerAI _towerAI;
@@ -12,13 +12,9 @@ public class TowerSpot : MonoBehaviour
     [System.Obsolete]
     void Start()
     {
-        _greenParticle = transform.FindChild("Circle_Selection_Green").GetComponent<ParticleSystem>();
+        _greenParticle = GetComponentInChildren<ParticleSystem>();
         if (_greenParticle == null)
             Debug.LogError("Green particle is NULL on " + transform.name);
-
-        _redParticle = transform.FindChild("Circle_Selection_Red").GetComponent<ParticleSystem>();
-        if (_redParticle == null)
-            Debug.LogError("Red particle is NULL on " + transform.name);
     }
 
     void OnEnable()
@@ -43,10 +39,6 @@ public class TowerSpot : MonoBehaviour
         {
             _greenParticle.Play();
         }
-        else
-        {
-            _redParticle.Play();
-        }
     }
 
     void TurnOffAvailable()
@@ -54,10 +46,6 @@ public class TowerSpot : MonoBehaviour
         if(_isUsed == false)
         {
             _greenParticle.Stop();
-        }
-        else
-        {
-            _redParticle.Stop();
         }
     }
 
@@ -90,7 +78,6 @@ public class TowerSpot : MonoBehaviour
         if (_towerAI == null)
             Debug.LogError("TowerAI is NULL on " + transform.name);
         _greenParticle.Stop();
-        _redParticle.Play();
     }
 
     public void SellTower()
