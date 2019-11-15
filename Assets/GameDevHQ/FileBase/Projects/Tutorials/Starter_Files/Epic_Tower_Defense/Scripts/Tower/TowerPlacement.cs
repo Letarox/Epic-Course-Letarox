@@ -32,7 +32,7 @@ public class TowerPlacement : MonoBehaviour
                 onAvailableOn();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2) && _isSummoning == false && _isRemoving == false)
+        if(Input.GetKeyDown(KeyCode.Alpha2) && _isSummoning == false && _isRemoving == false)
         {
             _isSummoning = true;
             _activeTowerMouseDrag = _decoyTowers[1];
@@ -43,22 +43,28 @@ public class TowerPlacement : MonoBehaviour
                 onAvailableOn();
         }        
 
-        if (Input.GetKeyDown(KeyCode.Alpha3) && _isSummoning == false && _isRemoving == false)
+        if(Input.GetKeyDown(KeyCode.Alpha3) && _isSummoning == false && _isRemoving == false)
         {
             _isRemoving = true;
             if (onSaleOn != null)
                 onSaleOn();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButton(1))
+        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButton(1))
         {
-            _isSummoning = false;
-            _isRemoving = false;
+            if(_isSummoning == true)
+            {
+                _isSummoning = false;
+                if (onAvailableOff != null)
+                    onAvailableOff();
+            }
+            if(_isRemoving == true)
+            {
+                _isRemoving = false;
+                if (onSaleOff != null)
+                    onSaleOff();
+            }
             _activeTowerMouseDrag.SetActive(false);
-            if (onAvailableOff != null)
-                onAvailableOff();
-            if (onSaleOff != null)
-                onSaleOff();
         }
 
         TowerSummon();
@@ -67,7 +73,7 @@ public class TowerPlacement : MonoBehaviour
 
     void TowerSummon()
     {
-        if (_isSummoning == true)
+        if(_isSummoning == true)
         {
             Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
@@ -77,17 +83,16 @@ public class TowerPlacement : MonoBehaviour
                 target.y = 0f;
                 _activeTowerMouseDrag.transform.position = target;
 
-                if (Input.GetMouseButton(0))
+                if(Input.GetMouseButton(0))
                 {
-                    if (hitInfo.transform.tag == "TowerSpot")
+                    if(hitInfo.transform.tag == "TowerSpot")
                     {
                         TowerSpot towerSpot = hitInfo.transform.GetComponent<TowerSpot>();
-                        if (towerSpot.GetSpotAvailability() == false)
+                        if(hitInfo.transform.GetComponent<TowerSpot>() != null)
                         {
-                            GameObject newTower = SpawnManager.Instance.RequestTower(_towerType, hitInfo.point);
-                            if (hitInfo.transform.GetComponent<TowerSpot>() != null)
-                            {                                
-                                towerSpot.TurnColorOnClick();
+                            if (towerSpot.GetSpotAvailability() == false)
+                            {
+                                GameObject newTower = SpawnManager.Instance.RequestTower(_towerType, hitInfo.point);
                                 towerSpot.SetTower(newTower);
                             }
                         }                        

@@ -67,10 +67,6 @@ public class TowerSpot : MonoBehaviour
         {
             _greenParticle.Play();
         }
-        else
-        {
-            _redParticle.Play();
-        }
     }
 
     void TurOffForSale()
@@ -78,10 +74,6 @@ public class TowerSpot : MonoBehaviour
         if (_isUsed == true)
         {
             _greenParticle.Stop();
-        }
-        else
-        {
-            _redParticle.Stop();
         }
     }
 
@@ -97,6 +89,8 @@ public class TowerSpot : MonoBehaviour
         _towerAI = _spotTower.GetComponent<TowerAI>();
         if (_towerAI == null)
             Debug.LogError("TowerAI is NULL on " + transform.name);
+        _greenParticle.Stop();
+        _redParticle.Play();
     }
 
     public void SellTower()
@@ -106,13 +100,5 @@ public class TowerSpot : MonoBehaviour
         _spotTower = null;
         _towerAI = null;
         _greenParticle.Stop();
-        _redParticle.Play();        
-    }
-
-    public void TurnColorOnClick()
-    {
-        _isUsed = true;
-        _greenParticle.Stop();
-        _redParticle.Play();
     }
 }
