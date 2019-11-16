@@ -11,34 +11,33 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     [SerializeField]
     private int _enemiesInitialWave;
-    [SerializeField]
-    private int _towersInitially;
+    //[SerializeField]
+    //private int _towersInitially;
 
     [SerializeField]
     private List<GameObject> _enemiesPrefabs;
     [SerializeField]
     private List<GameObject> _enemiesPool;
 
-    [SerializeField]
-    private List<GameObject> _towersPrefabs;
-    [SerializeField]
-    private List<GameObject> _towersPool;
-    [SerializeField]
-    private GameObject _towerContainer;
-
-    private int waveNumber = 1;
-
+    //[SerializeField]
+    //private List<GameObject> _towersPrefabs;
+    //[SerializeField]
+    //private List<GameObject> _towersPool;
+    //[SerializeField]
+    //private GameObject _towerContainer;
+    
+    private int _waveNumber = 1;
 
     private void Start()
     {
         _enemiesPool = GenerateEnemies(_enemiesInitialWave);
-        _towersPool = GenerateTower(_towersInitially);
+        //_towersPool = GenerateTower(_towersInitially);
         StartCoroutine(WaveSpawn());
     }
 
     IEnumerator WaveSpawn()
     {
-        for(int i = 0; i < waveNumber * 10; i++)
+        for(int i = 0; i < _waveNumber * 10; i++)
         {
             int randomEnemy = Random.Range(0, 2);
             GameObject enemy = RequestEnemy(randomEnemy);
@@ -85,7 +84,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         return newEnemy;
     }
 
-    List<GameObject> GenerateTower(int amountOfTowers)
+    /*List<GameObject> GenerateTower(int amountOfTowers)
     {
         for (int i = 0; i < amountOfTowers; i++)
         {
@@ -122,5 +121,5 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         newTower.transform.position = target;
 
         return newTower;
-    }
+    }*/
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField]
     private int _warFunds;
@@ -16,13 +16,23 @@ public class Player : MonoBehaviour
         _warFunds += fundsAmount;
     }
 
+    public void RemoveFunds(int fundsAmount)
+    {
+        _warFunds -= fundsAmount;
+    }
+
     public void ChangeLives(int livesAmouht)
     {
         _lives -= livesAmouht;
-        if(_lives <= 0)
+        if (_lives <= 0)
         {
             _isGameOver = true;
             Time.timeScale = 0;
         }
+    }
+
+    public int GetFunds()
+    {
+        return _warFunds;
     }
 }

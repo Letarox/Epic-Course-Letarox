@@ -1549,7 +1549,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
-  _speed: 0
+  _agent: {fileID: 2287022691413864381}
+  _speed: 2.2
   _enemy:
     health: 100
     warfunds: 30

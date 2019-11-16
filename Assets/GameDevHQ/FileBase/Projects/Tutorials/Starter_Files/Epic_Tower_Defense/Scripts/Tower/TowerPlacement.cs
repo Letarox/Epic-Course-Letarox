@@ -9,15 +9,14 @@ public class TowerPlacement : MonoBehaviour
     private GameObject[] _decoyTowers = new GameObject[2];
     [SerializeField]
     private GameObject[] _towers = new GameObject[2];
-    private GameObject _activeTowerMouseDrag, _currentPlacingTower;
+    private GameObject _activeTowerMouseDrag;
     private bool _isSummoning = false;
     private bool _isRemoving = false;
     private int _towerType;
+    private bool _justClicked = false;
 
-    public static event Action onAvailableOn;
-    public static event Action onAvailableOff;
-    public static event Action onSaleOn;
-    public static event Action onSaleOff;
+    public static event Action<bool> onAvailable;
+    public static event Action<bool> onSale;
 
     void Update()
     {
@@ -26,10 +25,9 @@ public class TowerPlacement : MonoBehaviour
             _isSummoning = true;
             _activeTowerMouseDrag = _decoyTowers[0];
             _activeTowerMouseDrag.SetActive(true);
-            _currentPlacingTower = _towers[0];
             _towerType = 0;
-            if (onAvailableOn != null)
-                onAvailableOn();
+            if (onAvailable != null)
+                onAvailable(true);
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha2) && _isSummoning == false && _isRemoving == false)
@@ -37,17 +35,16 @@ public class TowerPlacement : MonoBehaviour
             _isSummoning = true;
             _activeTowerMouseDrag = _decoyTowers[1];
             _activeTowerMouseDrag.SetActive(true);
-            _currentPlacingTower = _towers[1];
             _towerType = 1;
-            if (onAvailableOn != null)
-                onAvailableOn();
+            if (onAvailable != null)
+                onAvailable(true);
         }        
 
         if(Input.GetKeyDown(KeyCode.Alpha3) && _isSummoning == false && _isRemoving == false)
         {
             _isRemoving = true;
-            if (onSaleOn != null)
-                onSaleOn();
+            if (onSale != null)
+                onSale(true);
         }
 
         if(Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButton(1))
@@ -55,14 +52,14 @@ public class TowerPlacement : MonoBehaviour
             if(_isSummoning == true)
             {
                 _isSummoning = false;
-                if (onAvailableOff != null)
-                    onAvailableOff();
+                if (onAvailable != null)
+                    onAvailable(false);
             }
             if(_isRemoving == true)
             {
                 _isRemoving = false;
-                if (onSaleOff != null)
-                    onSaleOff();
+                if (onSale != null)
+                    onSale(false);
             }
             _activeTowerMouseDrag.SetActive(false);
         }
@@ -83,16 +80,17 @@ public class TowerPlacement : MonoBehaviour
                 target.y = 0f;
                 _activeTowerMouseDrag.transform.position = target;
 
-                if(Input.GetMouseButton(0))
+                if(Input.GetMouseButton(0) && _justClicked == false)
                 {
+                    StartCoroutine(ClickCooldown());
                     if(hitInfo.transform.tag == "TowerSpot")
                     {
                         TowerSpot towerSpot = hitInfo.transform.GetComponent<TowerSpot>();
                         if(hitInfo.transform.GetComponent<TowerSpot>() != null)
                         {
-                            if (towerSpot.GetSpotAvailability() == false)
+                            if (towerSpot.GetSpotAvailability(_towerType) == false)
                             {
-                                GameObject newTower = SpawnManager.Instance.RequestTower(_towerType, hitInfo.point);
+                                GameObject newTower = SaleManager.Instance.RequestTower(_towerType, hitInfo.point);
                                 towerSpot.SetTower(newTower);
                             }
                         }                        
@@ -110,8 +108,9 @@ public class TowerPlacement : MonoBehaviour
             RaycastHit hitInfo;
             if (Physics.Raycast(rayOrigin, out hitInfo))
             {
-                if (Input.GetMouseButton(0))
+                if (Input.GetMouseButton(0) && _justClicked == false)
                 {
+                    StartCoroutine(ClickCooldown());
                     if (hitInfo.transform.tag == "TowerSpot")
                     {
                         if (hitInfo.transform.GetComponent<TowerSpot>() != null)
@@ -120,5 +119,12 @@ public class TowerPlacement : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator ClickCooldown()
+    {
+        _justClicked = true;
+        yield return new WaitForSeconds(0.25f);
+        _justClicked = false;
     }
 }

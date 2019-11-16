@@ -19,55 +19,52 @@ public class TowerSpot : MonoBehaviour
 
     void OnEnable()
     {
-        TowerPlacement.onAvailableOn += TurnOnAvailable;
-        TowerPlacement.onAvailableOff += TurnOffAvailable;
-        TowerPlacement.onSaleOn += TurOnForSale;
-        TowerPlacement.onSaleOff += TurOffForSale;
+        TowerPlacement.onAvailable += TurnOnAvailable;
+        TowerPlacement.onSale += TurOnSale;
     }
 
     void OnDisable()
     {
-        TowerPlacement.onAvailableOn -= TurnOnAvailable;
-        TowerPlacement.onAvailableOff -= TurnOffAvailable;
-        TowerPlacement.onSaleOn -= TurOnForSale;
-        TowerPlacement.onSaleOff -= TurOffForSale;
+        TowerPlacement.onAvailable -= TurnOnAvailable;
+        TowerPlacement.onSale -= TurOnSale;
     }
 
-    void TurnOnAvailable()
+    void TurnOnAvailable(bool availability)
     {
-        if(_isUsed == false)
+        if (availability == true && _isUsed == false)
         {
             _greenParticle.Play();
         }
-    }
-
-    void TurnOffAvailable()
-    {
-        if(_isUsed == false)
+        else
         {
             _greenParticle.Stop();
         }
     }
 
-    void TurOnForSale()
+    void TurOnSale(bool availability)
     {
-        if (_isUsed == true)
+        if (availability == true && _isUsed == true)
         {
             _greenParticle.Play();
         }
-    }
-
-    void TurOffForSale()
-    {
-        if (_isUsed == true)
+        else
         {
             _greenParticle.Stop();
         }
     }
 
-    public bool GetSpotAvailability()
+    public bool GetSpotAvailability(int towerType)
     {
-        return _isUsed;
+        if((GameManager.Instance.GetFunds() >= SaleManager.Instance.GetTowerCost(towerType)) && _isUsed == false)
+        {
+            GameManager.Instance.RemoveFunds(SaleManager.Instance.GetTowerCost(towerType));
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+        
     }
 
     public void SetTower(GameObject obj)
@@ -82,6 +79,7 @@ public class TowerSpot : MonoBehaviour
 
     public void SellTower()
     {
+        GameManager.Instance.AddFunds(SaleManager.Instance.GetTowerCost(_towerAI.GetTowerType()));        
         _isUsed = false;
         _towerAI.Hide();
         _spotTower = null;

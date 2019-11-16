@@ -4,21 +4,16 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
-    private Player _player;
     private void Start()
     {
-        _player = GameObject.Find("Main Camera").GetComponent<Player>();
-        if (_player == null)
-        {
-            Debug.LogError("Player is NULL on the Player Base");
-        }
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Enemy")
         {
-            _player.ChangeLives(1);
+            GameManager.Instance.ChangeLives(1);
             other.GetComponent<AI>().Hide();
         }
     }

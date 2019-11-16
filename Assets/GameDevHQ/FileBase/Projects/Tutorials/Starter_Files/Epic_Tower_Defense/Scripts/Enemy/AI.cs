@@ -7,15 +7,14 @@ public class AI : MonoBehaviour
 {
     [SerializeField]
     private GameObject _target;
+    [SerializeField]
     private NavMeshAgent _agent;
     [SerializeField]
     private float _speed;
     [SerializeField]
     private Enemy _enemy;
 
-    private Player _player;
-
-    private void OnEnable()
+    private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _target = GameObject.Find("Player_Base");
@@ -26,13 +25,6 @@ public class AI : MonoBehaviour
         else
         {
             _agent.SetDestination(_target.transform.position);
-        }
-
-        _player = GameObject.Find("Main Camera").GetComponent<Player>();
-
-        if (_player == null)
-        {
-            Debug.LogError("Player is null on enemy: " + transform.name);
         }
 
         _speed = _agent.speed;
@@ -47,7 +39,7 @@ public class AI : MonoBehaviour
 
         if (_enemy.health <= 0)
         {
-            _player.AddFunds(_enemy.warfunds);
+            GameManager.Instance.AddFunds(_enemy.warfunds);
             Hide();
         }
     }
