@@ -44,9 +44,9 @@ public class SaleManager : MonoSingleton<SaleManager>
         //check if the type is the same that we requested and return it
         foreach (var tower in _towersPool)
         {
-            TowerAI towerAI = tower.GetComponent<TowerAI>();
+            ITower towerAI = tower.GetComponent<ITower>();
             if (towerAI == null)
-                Debug.LogError("TowerAI is NULL on the Spawn Manager");
+                Debug.LogError("TowerAI is NULL on the Sale Manager");
             if (tower.activeInHierarchy == false && towerAI.GetTowerType() == type)
             {
                 tower.SetActive(true);

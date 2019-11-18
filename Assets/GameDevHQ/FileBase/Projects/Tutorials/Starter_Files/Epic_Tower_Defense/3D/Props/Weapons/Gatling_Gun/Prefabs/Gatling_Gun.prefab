@@ -5033,7 +5033,6 @@ GameObject:
   - component: {fileID: 4633165491543876}
   - component: {fileID: 114600360289361042}
   - component: {fileID: 82825197453988258}
-  - component: {fileID: 6466971748214345839}
   m_Layer: 0
   m_Name: Gatling_Gun
   m_TagString: Untagged
@@ -5072,6 +5071,7 @@ MonoBehaviour:
   Muzzle_Flash: {fileID: 1905276477678454}
   bulletCasings: {fileID: 198239830521320308}
   fireSound: {fileID: 8300000, guid: 08e0cb88300e54b09aa0deb684c3a3de, type: 3}
+  _towerType: 0
 --- !u!82 &82825197453988258
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5168,22 +5168,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6466971748214345839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425032208015248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1951a77368ffe8f40ab16e803dc56aab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tower:
-    damage: 10
-    cost: 100
-    tType: 0
 --- !u!1 &1481110104042698
 GameObject:
   m_ObjectHideFlags: 0

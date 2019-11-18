@@ -5,7 +5,7 @@ using GameDevHQ.FileBase.Missle_Launcher.Missle;
 
 namespace GameDevHQ.FileBase.Missle_Launcher
 {
-    public class Missle_Launcher : MonoBehaviour
+    public class Missle_Launcher : MonoBehaviour, ITower
     {
         [SerializeField]
         private GameObject _missilePrefab; //holds the missle gameobject to clone
@@ -24,6 +24,38 @@ namespace GameDevHQ.FileBase.Missle_Launcher
         [SerializeField]
         private float _destroyTime = 10.0f; //how long till the rockets get cleaned up
         private bool _launched; //bool to check if we launched the rockets
+
+        public int Damage { get; set; }
+        public int WarfundCost { get; set; }
+        public float FireRate { get; set; }
+
+        [SerializeField]
+        private TowerType _towerType;
+
+        enum TowerType
+        {
+            Gattling_Gun,
+            Missile_Turret,
+            Dual_Gattling_Gun,
+            Dual_Missile_Turret
+        }
+
+        void SetTowerStats()
+        {
+            Damage = 10;
+            WarfundCost = 100;
+            FireRate = 0.25f;
+        }
+
+        public void Hide()
+        {
+            this.gameObject.SetActive(false);
+        }
+
+        public int GetTowerType()
+        {
+            return (int)_towerType;
+        }
 
         private void Update()
         {

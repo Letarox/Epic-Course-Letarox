@@ -814,7 +814,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4508629992324016}
   - component: {fileID: 114764317976684078}
-  - component: {fileID: -8905360957605979004}
   m_Layer: 0
   m_Name: Missile_Launcher_Turret
   m_TagString: Untagged
@@ -864,22 +863,7 @@ MonoBehaviour:
   _fuseDelay: 0
   _reloadTime: 0
   _destroyTime: 10
---- !u!114 &-8905360957605979004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1821146363788296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1951a77368ffe8f40ab16e803dc56aab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tower:
-    damage: 20
-    cost: 150
-    tType: 1
+  _towerType: 1
 --- !u!1 &1873951908610878
 GameObject:
   m_ObjectHideFlags: 0
