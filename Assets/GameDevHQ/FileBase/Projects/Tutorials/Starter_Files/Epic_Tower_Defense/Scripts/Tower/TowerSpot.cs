@@ -5,9 +5,11 @@ using UnityEngine;
 public class TowerSpot : MonoBehaviour
 {
     private ParticleSystem _greenParticle;
+    private MeshRenderer _radius;
     private bool _isUsed = false;
     private GameObject _spotTower = null;
     private TowerAI _towerAI;
+    private Vector3 _myPos;
 
     [System.Obsolete]
     void Start()
@@ -15,45 +17,93 @@ public class TowerSpot : MonoBehaviour
         _greenParticle = GetComponentInChildren<ParticleSystem>();
         if (_greenParticle == null)
             Debug.LogError("Green particle is NULL on " + transform.name);
+        _radius = this.transform.FindChild("Radius").GetComponent<MeshRenderer>();
+        if (_radius == null)
+            Debug.LogError("Radius is NULL on " + transform.name);
     }
 
     void OnEnable()
     {
-        TowerPlacement.onAvailable += TurnOnAvailable;
-        TowerPlacement.onSale += TurOnSale;
+        TowerPlacement.OnAvailable += TurnOnAvailable;
+        TowerPlacement.OnSale += TurOnSale;
     }
 
     void OnDisable()
     {
-        TowerPlacement.onAvailable -= TurnOnAvailable;
-        TowerPlacement.onSale -= TurOnSale;
+        TowerPlacement.OnAvailable -= TurnOnAvailable;
+        TowerPlacement.OnSale -= TurOnSale;
     }
 
-    void TurnOnAvailable(bool availability)
+    void TurnOnAvailable(bool active)
     {
-        if (availability == true && _isUsed == false)
+        if (active == true && _isUsed == false)
         {
             _greenParticle.Play();
         }
         else
         {
             _greenParticle.Stop();
+            if (_radius.enabled == true)
+                _radius.enabled = false;
         }
     }
 
-    void TurOnSale(bool availability)
+    void TurOnSale(bool active)
     {
-        if (availability == true && _isUsed == true)
+        if (active == true && _isUsed == true)
         {
             _greenParticle.Play();
+            if (_radius.enabled == true)
+                _radius.enabled = false;
         }
         else
         {
-            _greenParticle.Stop();
+            _greenParticle.Stop();            
         }
     }
 
-    public bool GetSpotAvailability(int towerType)
+    void OnMouseEnter()
+    {
+        TowerPlacement.Instance.SpotCheck(true);        
+        bool summoning = TowerPlacement.Instance.GetSumonning();
+        bool removing = TowerPlacement.Instance.GetRemoving();
+        _myPos = transform.position;
+        if ((summoning == true && _isUsed == false) || (removing == true && _isUsed == true))
+        {
+            _radius.enabled = true;
+            TowerPlacement.Instance.StayAtSpotPosition(this.transform.position);
+            Debug.Log("multiple calls...");
+        }
+    }
+
+    void OnMouseOver()
+    {
+
+    }
+
+    void OnMouseExit()
+    {
+        _radius.enabled = false;
+        TowerPlacement.Instance.SpotCheck(false);
+    }
+
+    void OnMouseDown()
+    {
+        Debug.Log("mouse down...");
+        int towerType = TowerPlacement.Instance.GetTowerType();
+        bool availableSpot = GetFundsAvailability(towerType);
+        if (availableSpot == false)
+        {
+            GameObject newTower = SaleManager.Instance.RequestTower(TowerPlacement.Instance.GetTowerType(), this.transform.position);
+            SetTower(newTower);
+        }
+        else if (_isUsed == true && TowerPlacement.Instance.GetRemoving() == true)
+        {
+            SellTower();
+        }
+    }
+
+    public bool GetFundsAvailability(int towerType)
     {
         if((GameManager.Instance.GetFunds() >= SaleManager.Instance.GetTowerCost(towerType)) && _isUsed == false)
         {

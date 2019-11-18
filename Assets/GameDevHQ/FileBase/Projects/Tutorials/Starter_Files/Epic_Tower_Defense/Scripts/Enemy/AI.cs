@@ -14,7 +14,7 @@ public class AI : MonoBehaviour
     [SerializeField]
     private Enemy _enemy;
 
-    private void Start()
+    void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _target = GameObject.Find("Player_Base");
@@ -30,7 +30,7 @@ public class AI : MonoBehaviour
         _speed = _agent.speed;
     }
 
-    private void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -44,6 +44,11 @@ public class AI : MonoBehaviour
         }
     }
 
+    void OnValidate()
+    {
+        _agent.speed = _speed;
+    }
+
     public void Hide()
     {
         this.gameObject.SetActive(false);
@@ -53,10 +58,4 @@ public class AI : MonoBehaviour
     {
         return (int)_enemy.eType;
     }
-
-    private void OnValidate()
-    {
-        _agent.speed = _speed;
-    }
-
 }

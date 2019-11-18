@@ -4664,7 +4664,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 856910637}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.24, y: 20, z: 3.63}
+  m_LocalPosition: {x: -23.34, y: 20, z: 3.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 534669905}
@@ -4684,11 +4684,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 2.5
-  _maxSpeed: 5
-  _limitLeft: -7
-  _limitRight: 12
-  _limitTop: -30
-  _limitBottom: 1
 --- !u!114 &856910641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4717,9 +4712,6 @@ MonoBehaviour:
   _decoyTowers:
   - {fileID: 3035373741763278650}
   - {fileID: 2402261849257941605}
-  _towers:
-  - {fileID: 1425032208015248, guid: 75f3d166786e1cb40afc4396cd0bcc22, type: 3}
-  - {fileID: 1821146363788296, guid: 23a8b9b94225d3845aed312b792882a9, type: 3}
 --- !u!1001 &863224494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12863,11 +12855,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gatling_Gun_Decoy
       objectReference: {fileID: 0}
-    - target: {fileID: 11211053062721811, guid: 520f0fbdcda921c48aa35b6c0e4593f2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 14269176266805703, guid: 520f0fbdcda921c48aa35b6c0e4593f2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12922,11 +12909,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7347576412671449239, guid: 520f0fbdcda921c48aa35b6c0e4593f2,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 520f0fbdcda921c48aa35b6c0e4593f2, type: 3}
@@ -12997,11 +12979,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7084481465732896727, guid: c5b2955f5d3833a48ad6e68ed95a5f4a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5b2955f5d3833a48ad6e68ed95a5f4a, type: 3}
 --- !u!1001 &8275168963066985771
@@ -13015,11 +12992,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Missile_Launcher_Turret_Decoy
-      objectReference: {fileID: 0}
-    - target: {fileID: 6017304125426886478, guid: 7a4cc1ff3956b38408e66c149efbe4da,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6023493003330101494, guid: 7a4cc1ff3956b38408e66c149efbe4da,
         type: 3}
@@ -13076,56 +13048,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6040050978723907914, guid: 7a4cc1ff3956b38408e66c149efbe4da,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 3cb518029562acc4cb04a4afe6c84249, type: 2}
-    - target: {fileID: 6040723158377176580, guid: 7a4cc1ff3956b38408e66c149efbe4da,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 934077a243f76c049a770c10676ea777, type: 2}
-    - target: {fileID: 6040290577299085438, guid: 7a4cc1ff3956b38408e66c149efbe4da,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 934077a243f76c049a770c10676ea777, type: 2}
-    - target: {fileID: 6040236944577586014, guid: 7a4cc1ff3956b38408e66c149efbe4da,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 934077a243f76c049a770c10676ea777, type: 2}
-    - target: {fileID: 6040913709273080336, guid: 7a4cc1ff3956b38408e66c149efbe4da,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 934077a243f76c049a770c10676ea777, type: 2}
-    - target: {fileID: 6040293017073367032, guid: 7a4cc1ff3956b38408e66c149efbe4da,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 934077a243f76c049a770c10676ea777, type: 2}
-    - target: {fileID: 6040495715613780256, guid: 7a4cc1ff3956b38408e66c149efbe4da,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 934077a243f76c049a770c10676ea777, type: 2}
-    - target: {fileID: 6041006214793074114, guid: 7a4cc1ff3956b38408e66c149efbe4da,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 934077a243f76c049a770c10676ea777, type: 2}
-    - target: {fileID: 6041005578648130840, guid: 7a4cc1ff3956b38408e66c149efbe4da,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 934077a243f76c049a770c10676ea777, type: 2}
-    - target: {fileID: 6041030811072308312, guid: 7a4cc1ff3956b38408e66c149efbe4da,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 3cb518029562acc4cb04a4afe6c84249, type: 2}
-    m_RemovedComponents:
-    - {fileID: 5913230572392873320, guid: 7a4cc1ff3956b38408e66c149efbe4da, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a4cc1ff3956b38408e66c149efbe4da, type: 3}
