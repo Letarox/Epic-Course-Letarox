@@ -29,6 +29,14 @@ namespace GameDevHQ.FileBase.Gatling_Gun
         private AudioSource _audioSource; //reference to the audio source component
         private bool _startWeaponNoise = true;
 
+        [SerializeField]
+        private List<GameObject> _attackQueue = new List<GameObject>();
+
+        private GameObject _target = null;
+        private IDamageble _targetDamagable;
+
+        private float _canFire = -1f;
+
         public int Damage { get; set; }
         public int WarfundCost { get; set; }
         public float FireRate { get; set; }
@@ -44,16 +52,19 @@ namespace GameDevHQ.FileBase.Gatling_Gun
             Dual_Missile_Turret
         }
 
-        void SetTowerStats()
-        {
-            Damage = 10;
-            WarfundCost = 100;
-            FireRate = 0.25f;
-        }
-
         public void Hide()
         {
             this.gameObject.SetActive(false);
+        }
+
+        public void Shoot(GameObject target)
+        {
+            transform.LookAt(target.transform);
+            if(_canFire <= Time.time)
+            {
+                _canFire = Time.time + FireRate;
+                _targetDamagable.Damage(Damage);
+            }
         }
 
         public int GetTowerType()
@@ -61,10 +72,27 @@ namespace GameDevHQ.FileBase.Gatling_Gun
             return (int)_towerType;
         }
 
-        // Use this for initialization
-        void Start()
+        void Awake()
         {
-            SetTowerStats();
+            switch (_towerType)
+            {
+                case TowerType.Gattling_Gun:
+                    Damage = 10;
+                    WarfundCost = 100;
+                    FireRate = 0.25f;
+                    break;
+                case TowerType.Missile_Turret:
+                    Damage = 20;
+                    WarfundCost = 150;
+                    FireRate = 2f;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        void Start()
+        {            
             _gunBarrel = GameObject.Find("Barrel_to_Spin").GetComponent<Transform>(); //assigning the transform of the gun barrel to the variable
             Muzzle_Flash.SetActive(false); //setting the initial state of the muzzle flash effect to off
             _audioSource = GetComponent<AudioSource>(); //ssign the Audio Source to the reference variable
@@ -73,34 +101,87 @@ namespace GameDevHQ.FileBase.Gatling_Gun
             _audioSource.clip = fireSound; //assign the clip to play
         }
 
-        // Update is called once per frame
         void Update()
         {
-            if (Input.GetMouseButton(0)) //Check for left click (held) user input
-            { 
-                RotateBarrel(); //Call the rotation function responsible for rotating our gun barrel
-                Muzzle_Flash.SetActive(true); //enable muzzle effect particle effect
-                bulletCasings.Emit(1); //Emit the bullet casing particle effect  
 
-                if (_startWeaponNoise == true) //checking if we need to start the gun sound
-                {
-                    _audioSource.Play(); //play audio clip attached to audio source
-                    _startWeaponNoise = false; //set the start weapon noise value to false to prevent calling it again
-                }
+        }
 
+        void Attack()
+        {
+            RotateBarrel(); //Call the rotation function responsible for rotating our gun barrel
+            Muzzle_Flash.SetActive(true); //enable muzzle effect particle effect
+            bulletCasings.Emit(1); //Emit the bullet casing particle effect  
+
+            if (_startWeaponNoise == true) //checking if we need to start the gun sound
+            {
+                _audioSource.Play(); //play audio clip attached to audio source
+                _startWeaponNoise = false; //set the start weapon noise value to false to prevent calling it again
             }
-            else if (Input.GetMouseButtonUp(0)) //Check for left click (release) user input
-            {      
-                Muzzle_Flash.SetActive(false); //turn off muzzle flash particle effect
-                _audioSource.Stop(); //stop the sound effect from playing
-                _startWeaponNoise = true; //set the start weapon noise value to true
-            }
+        }
+
+        void StopAttacking()
+        {
+            Muzzle_Flash.SetActive(false); //turn off muzzle flash particle effect
+            _audioSource.Stop(); //stop the sound effect from playing
+            _startWeaponNoise = true; //set the start weapon noise value to true
         }
 
         // Method to rotate gun barrel 
         void RotateBarrel() 
         {
             _gunBarrel.transform.Rotate(Vector3.forward * Time.deltaTime * -500.0f); //rotate the gun barrel along the "forward" (z) axis at 500 meters per second
+        }
+
+        GameObject SetEnemyTarget()
+        {
+            foreach (var enemy in _attackQueue)
+            {
+                if (enemy.activeInHierarchy == true)
+                {
+                    _targetDamagable = enemy.GetComponent<IDamageble>();
+                    if (_targetDamagable == null)
+                        Debug.LogError("IDamagable is NULL on " + enemy.transform.name);
+                    return enemy;
+                }
+            }
+            return null;
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            if(other.tag == "Enemy")
+            {
+                _attackQueue.Add(other.gameObject);
+                if (_target == null)
+                    _target = SetEnemyTarget();
+            }
+        }
+
+        void OnTriggerStay(Collider other)
+        {
+            if(_target != null && _target.activeInHierarchy == true)
+            {
+                Attack();
+                Shoot(_target);
+            }
+            else
+            {
+                _target = SetEnemyTarget();
+                if(_target == null)
+                    StopAttacking();
+            }
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            if(other.tag == "Enemy")
+            {
+                _attackQueue.Remove(other.gameObject);
+                if (other.gameObject.Equals(_target))
+                {
+                    _target = SetEnemyTarget();
+                }
+            }
         }
     }
 

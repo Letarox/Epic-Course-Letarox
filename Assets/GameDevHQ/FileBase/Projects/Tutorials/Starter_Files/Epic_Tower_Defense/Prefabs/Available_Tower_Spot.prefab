@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1172349469306434757}
   - component: {fileID: 2724313385720930825}
   - component: {fileID: 2660646832961034998}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Radius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 3095947973394533986}
   - component: {fileID: 3095947973394533987}
   - component: {fileID: 3095947973394533991}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Available_Tower_Spot
   m_TagString: TowerSpot
   m_Icon: {fileID: 0}
@@ -196,6 +196,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Circle_Selection_Green
+      objectReference: {fileID: 0}
+    - target: {fileID: 5234913521985193789, guid: d65c798ada92d4e81a896301d3a7aa8f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f,
         type: 3}

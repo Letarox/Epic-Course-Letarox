@@ -7,9 +7,9 @@ public class TowerSpot : MonoBehaviour
     private ParticleSystem _greenParticle;
     private MeshRenderer _radius;
     private bool _isUsed = false;
+    private bool _onMe = false;
     private GameObject _spotTower = null;
     private ITower _towerAI;
-    private Vector3 _myPos;
 
     [System.Obsolete]
     void Start()
@@ -39,6 +39,8 @@ public class TowerSpot : MonoBehaviour
         if (active == true && _isUsed == false)
         {
             _greenParticle.Play();
+            if (_onMe == true)
+                _radius.enabled = true;
         }
         else
         {
@@ -52,8 +54,8 @@ public class TowerSpot : MonoBehaviour
     {
         if (active == true && _isUsed == true)
         {
-            _greenParticle.Play();      
-            if(TowerPlacement.Instance.GetSpotValue() == true)
+            _greenParticle.Play();
+            if (_onMe == true)
                 _radius.enabled = true;
         }
         else
@@ -66,10 +68,10 @@ public class TowerSpot : MonoBehaviour
 
     void OnMouseEnter()
     {
+        _onMe = true;
         TowerPlacement.Instance.SpotCheck(true);        
         bool summoning = TowerPlacement.Instance.GetSumonning();
         bool removing = TowerPlacement.Instance.GetRemoving();
-        _myPos = transform.position;
         if ((summoning == true && _isUsed == false) || (removing == true && _isUsed == true))
         {
             _radius.enabled = true;
@@ -84,31 +86,45 @@ public class TowerSpot : MonoBehaviour
 
     void OnMouseExit()
     {
+        _onMe = false;
         _radius.enabled = false;
         TowerPlacement.Instance.SpotCheck(false);
     }
 
     void OnMouseDown()
     {
-        int towerType = TowerPlacement.Instance.GetTowerType();
-        bool availableSpot = GetFundsAvailability(towerType);
+        int towerType = TowerPlacement.Instance.GetTowerType();        
         bool summoning = TowerPlacement.Instance.GetSumonning();
-        if (availableSpot == false && summoning == true)
+        bool removing = TowerPlacement.Instance.GetRemoving();
+        if (summoning == true)
         {
             GameObject newTower = SaleManager.Instance.RequestTower(TowerPlacement.Instance.GetTowerType(), this.transform.position);
-            GameManager.Instance.RemoveFunds(SaleManager.Instance.GetTowerCost(towerType));
-            SetTower(newTower);
+            ITower iTower = newTower.GetComponent<ITower>();
+            if (iTower != null)
+            {
+                bool availableSpot = GetFundsAvailability(iTower.WarfundCost);
+                if(availableSpot == false)
+                {
+                    GameManager.Instance.RemoveFunds(iTower.WarfundCost);
+                    SetTower(newTower);
+                }
+                else
+                {
+                    newTower.SetActive(false);
+                }
+            }
+            
         }
-        else if (_isUsed == true && TowerPlacement.Instance.GetRemoving() == true)
+        else if (_isUsed == true && removing == true)
         {
             SellTower();
         }
     }
 
-    public bool GetFundsAvailability(int towerType)
+    public bool GetFundsAvailability(int warfundCost)
     {
-        if((GameManager.Instance.GetFunds() >= SaleManager.Instance.GetTowerCost(towerType)) && _isUsed == false)
-        {            
+        if((GameManager.Instance.GetFunds() >= warfundCost) && _isUsed == false)
+        {
             return false;
         }
         else
@@ -122,6 +138,7 @@ public class TowerSpot : MonoBehaviour
     {
         _isUsed = true;
         _spotTower = obj;
+        _spotTower.SetActive(true);
         _towerAI = _spotTower.GetComponent<ITower>();
         if (_towerAI == null)
             Debug.LogError("TowerAI is NULL on " + transform.name);

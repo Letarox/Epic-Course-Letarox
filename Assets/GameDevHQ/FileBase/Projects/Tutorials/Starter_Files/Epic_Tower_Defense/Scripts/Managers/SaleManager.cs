@@ -49,7 +49,7 @@ public class SaleManager : MonoSingleton<SaleManager>
                 Debug.LogError("TowerAI is NULL on the Sale Manager");
             if (tower.activeInHierarchy == false && towerAI.GetTowerType() == type)
             {
-                tower.SetActive(true);
+                //tower.SetActive(true);
                 tower.transform.position = target;
                 return tower;
             }
@@ -57,7 +57,7 @@ public class SaleManager : MonoSingleton<SaleManager>
 
         GameObject newTower = Instantiate(_towersPrefabs[type], target, Quaternion.identity);
         newTower.transform.parent = _towerContainer.transform;
-        newTower.SetActive(true);
+        newTower.SetActive(false); //change it back to true if the code breaks
         _towersPool.Add(newTower);
         newTower.transform.position = target;
 

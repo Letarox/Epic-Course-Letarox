@@ -40,21 +40,38 @@ namespace GameDevHQ.FileBase.Missle_Launcher
             Dual_Missile_Turret
         }
 
-        void SetTowerStats()
-        {
-            Damage = 10;
-            WarfundCost = 100;
-            FireRate = 0.25f;
-        }
-
         public void Hide()
         {
             this.gameObject.SetActive(false);
         }
 
+        public void Shoot(GameObject target)
+        {
+
+        }
+
         public int GetTowerType()
         {
             return (int)_towerType;
+        }
+
+        void Awake()
+        {
+            switch (_towerType)
+            {
+                case TowerType.Gattling_Gun:
+                    Damage = 10;
+                    WarfundCost = 100;
+                    FireRate = 0.25f;
+                    break;
+                case TowerType.Missile_Turret:
+                    Damage = 20;
+                    WarfundCost = 150;
+                    FireRate = 2f;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Update()

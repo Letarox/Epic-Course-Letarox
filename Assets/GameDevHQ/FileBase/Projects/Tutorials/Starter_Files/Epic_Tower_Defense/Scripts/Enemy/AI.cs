@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AI : MonoBehaviour
+public class AI : MonoBehaviour, IDamageble
 {
     [SerializeField]
     private GameObject _target;
@@ -11,8 +11,35 @@ public class AI : MonoBehaviour
     private NavMeshAgent _agent;
     [SerializeField]
     private float _speed;
+
     [SerializeField]
-    private Enemy _enemy;
+    private EnemyType _enemyType;
+
+    public int Health { get; set; }
+    public int Warfunds { get; set; }
+
+    enum EnemyType
+    {
+        Tall_Mech,
+        Big_Mech
+    }
+
+    void Awake()
+    {
+        switch (_enemyType)
+        {
+            case EnemyType.Tall_Mech:
+                Health = 100;
+                Warfunds = Random.Range(30, 51);
+                break;
+            case EnemyType.Big_Mech:
+                Health = 150;
+                Warfunds = Random.Range(45, 76);
+                break;
+            default:
+                break;
+        }
+    }
 
     void Start()
     {
@@ -32,16 +59,7 @@ public class AI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _enemy.health -= 10;
-        }
 
-        if (_enemy.health <= 0)
-        {
-            GameManager.Instance.AddFunds(_enemy.warfunds);
-            Hide();
-        }
     }
 
     void OnValidate()
@@ -56,6 +74,16 @@ public class AI : MonoBehaviour
 
     public int ReturnEnemyType()
     {
-        return (int)_enemy.eType;
+        return (int)_enemyType;
+    }
+
+    public void Damage(int damageAmount)
+    {
+        Health -= damageAmount;
+        if (Health <= 0)
+        {
+            GameManager.Instance.AddFunds(Warfunds);
+            Hide();
+        }
     }
 }

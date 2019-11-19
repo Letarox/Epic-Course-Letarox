@@ -1551,10 +1551,7 @@ MonoBehaviour:
   _target: {fileID: 0}
   _agent: {fileID: 2287022691413864381}
   _speed: 2.2
-  _enemy:
-    health: 100
-    warfunds: 30
-    eType: 0
+  _enemyType: 0
 --- !u!195 &2287022691413864381
 NavMeshAgent:
   m_ObjectHideFlags: 0

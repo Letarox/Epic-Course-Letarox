@@ -9,4 +9,6 @@ public interface ITower
     float FireRate { get; set; }
     int GetTowerType();
     void Hide();
+
+    void Shoot(GameObject target);
 }
