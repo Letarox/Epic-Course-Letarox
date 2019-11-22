@@ -4712,6 +4712,7 @@ MonoBehaviour:
   _decoyTowers:
   - {fileID: 3035373741763278650}
   - {fileID: 2402261849257941605}
+  _onSpot: 0
 --- !u!1001 &863224494
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class TowerSpot : MonoBehaviour
 {
     private ParticleSystem _greenParticle;
     private MeshRenderer _radius;
+    [SerializeField]
     private bool _isUsed = false;
     private bool _onMe = false;
     private GameObject _spotTower = null;
@@ -92,12 +93,12 @@ public class TowerSpot : MonoBehaviour
     }
 
     void OnMouseDown()
-    {
-        int towerType = TowerPlacement.Instance.GetTowerType();        
+    {        
         bool summoning = TowerPlacement.Instance.GetSumonning();
         bool removing = TowerPlacement.Instance.GetRemoving();
         if (summoning == true)
         {
+            int towerType = TowerPlacement.Instance.GetTowerType();
             GameObject newTower = SaleManager.Instance.RequestTower(TowerPlacement.Instance.GetTowerType(), this.transform.position);
             ITower iTower = newTower.GetComponent<ITower>();
             if (iTower != null)

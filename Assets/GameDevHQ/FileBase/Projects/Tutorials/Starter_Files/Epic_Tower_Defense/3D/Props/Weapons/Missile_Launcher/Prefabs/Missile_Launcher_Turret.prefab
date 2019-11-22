@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4566012468963784}
   - component: {fileID: 33562622559816478}
   - component: {fileID: 23879385792250680}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missile_Launcher_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4410071366585132}
   - component: {fileID: 33285636455535294}
   - component: {fileID: 23165589194182238}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missle_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 4677427663821902}
   - component: {fileID: 33034882838446554}
   - component: {fileID: 23165951754899076}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missle_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,7 +249,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4080265027311430}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: RotY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 4539982138896924}
   - component: {fileID: 33144720841071070}
   - component: {fileID: 23001706626334494}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Turret_Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 4631571756655350}
   - component: {fileID: 33174452754595352}
   - component: {fileID: 23450242835481922}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missile_Support
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 4534085951530390}
   - component: {fileID: 33828852216536112}
   - component: {fileID: 23534717021893222}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missle_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -515,7 +515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4147663311326844}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: RotX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 4609344244662392}
   - component: {fileID: 33499250745848886}
   - component: {fileID: 23785827841341464}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missle_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -625,7 +625,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4770904394862482}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missile_Launcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 4201268051773276}
   - component: {fileID: 33355093859156790}
   - component: {fileID: 23969590505755148}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -737,7 +737,7 @@ GameObject:
   - component: {fileID: 4465986464106652}
   - component: {fileID: 33979685977039238}
   - component: {fileID: 23108887046879574}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missle_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -814,7 +814,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4508629992324016}
   - component: {fileID: 114764317976684078}
-  m_Layer: 8
+  - component: {fileID: 7360508753305104286}
+  m_Layer: 2
   m_Name: Missile_Launcher_Turret
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -833,6 +834,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4770904394862482}
+  - {fileID: 6014392641880041686}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -863,7 +865,24 @@ MonoBehaviour:
   _fuseDelay: 0
   _reloadTime: 0
   _destroyTime: 10
+  _attackQueue: []
   _towerType: 1
+--- !u!54 &7360508753305104286
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821146363788296}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1873951908610878
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,7 +894,7 @@ GameObject:
   - component: {fileID: 4840189027547324}
   - component: {fileID: 33557729822397990}
   - component: {fileID: 23877085751225534}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -942,3 +961,47 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &4289732623077566902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6014392641880041686}
+  - component: {fileID: 4967729253856258892}
+  m_Layer: 2
+  m_Name: Attack_Radius
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6014392641880041686
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4289732623077566902}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4508629992324016}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4967729253856258892
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4289732623077566902}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

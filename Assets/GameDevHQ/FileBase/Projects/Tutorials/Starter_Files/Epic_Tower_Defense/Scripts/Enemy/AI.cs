@@ -11,12 +11,17 @@ public class AI : MonoBehaviour, IDamageble
     private NavMeshAgent _agent;
     [SerializeField]
     private float _speed;
+    private Animator _anim;
 
     [SerializeField]
     private EnemyType _enemyType;
 
+    [SerializeField]
+    private GameObject _explosionPrefab;
+
     public int Health { get; set; }
     public int Warfunds { get; set; }
+    public float Speed { get; set; }
 
     enum EnemyType
     {
@@ -24,36 +29,44 @@ public class AI : MonoBehaviour, IDamageble
         Big_Mech
     }
 
-    void Awake()
+    void SetStats()
     {
         switch (_enemyType)
         {
             case EnemyType.Tall_Mech:
                 Health = 100;
                 Warfunds = Random.Range(30, 51);
+                Speed = 2.2f;
                 break;
             case EnemyType.Big_Mech:
                 Health = 150;
                 Warfunds = Random.Range(45, 76);
+                Speed = 1.8f;
                 break;
             default:
                 break;
         }
     }
 
-    void Start()
+    void OnEnable()
     {
+        SetStats();
         _agent = GetComponent<NavMeshAgent>();
         _target = GameObject.Find("Player_Base");
-        if (_target == null)
-        {
-            Debug.LogError("Player base is NULL on enemy: " + transform.name);
-        }
-        else
-        {
-            _agent.SetDestination(_target.transform.position);
-        }
+        _anim = GetComponent<Animator>();
 
+        if (_agent == null)
+            Debug.LogError("NavMesh Agent is NULL on " + transform.name);
+
+        if (_target == null)
+            Debug.LogError("Player base is NULL on enemy: " + transform.name);
+        else
+            _agent.SetDestination(_target.transform.position);
+
+        if (_anim == null)
+            Debug.LogError("Animator is NULL on " + transform.name);
+
+        _agent.speed = Speed;
         _speed = _agent.speed;
     }
 
@@ -69,6 +82,8 @@ public class AI : MonoBehaviour, IDamageble
 
     public void Hide()
     {
+        GameObject gO = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+        Destroy(gO, 5f);
         this.gameObject.SetActive(false);
     }
 
@@ -83,7 +98,15 @@ public class AI : MonoBehaviour, IDamageble
         if (Health <= 0)
         {
             GameManager.Instance.AddFunds(Warfunds);
-            Hide();
+            StartCoroutine(DeathRoutine());
         }
+    }
+
+    IEnumerator DeathRoutine()
+    {
+        _anim.SetTrigger("Dead");
+        _agent.speed = 0f;
+        yield return new WaitForSeconds(0.75f);
+        Hide();
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4230997169374272}
   - component: {fileID: 33112177827342694}
   - component: {fileID: 23281872966698340}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Turret_Bottom_Of_Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 4487937688588952}
   - component: {fileID: 198239830521320308}
   - component: {fileID: 199536778958901378}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Bullet_Casing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4843,7 +4843,7 @@ GameObject:
   - component: {fileID: 4350790293061252}
   - component: {fileID: 33179956645731040}
   - component: {fileID: 23128490125838714}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Barrels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4919,7 +4919,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4445333471610312}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Rotate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4953,7 +4953,7 @@ GameObject:
   - component: {fileID: 4483940257070060}
   - component: {fileID: 33429716185266572}
   - component: {fileID: 23398197780819720}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Mini_Gun_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5033,9 +5033,8 @@ GameObject:
   - component: {fileID: 4633165491543876}
   - component: {fileID: 114600360289361042}
   - component: {fileID: 82825197453988258}
-  - component: {fileID: 8353607841882546652}
   - component: {fileID: 1360573936491308228}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Gatling_Gun
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5172,19 +5171,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!135 &8353607841882546652
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425032208015248}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1360573936491308228
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5212,7 +5198,7 @@ GameObject:
   - component: {fileID: 4269261858695514}
   - component: {fileID: 33692080794478644}
   - component: {fileID: 23552472030134646}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Turret_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5290,7 +5276,7 @@ GameObject:
   - component: {fileID: 4891192007684496}
   - component: {fileID: 33094395147397436}
   - component: {fileID: 23557931007944702}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Mini_Gun_Braces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5366,7 +5352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4813843730394250}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Barrel_to_Spin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5401,7 +5387,7 @@ GameObject:
   - component: {fileID: 4171806296802358}
   - component: {fileID: 33637259344722960}
   - component: {fileID: 23222989458493218}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Barrel_Tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5479,7 +5465,7 @@ GameObject:
   - component: {fileID: 4467111432530078}
   - component: {fileID: 198006838423099326}
   - component: {fileID: 199940704975787204}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Muzzle_Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10233,7 +10219,7 @@ GameObject:
   - component: {fileID: 4477828785630856}
   - component: {fileID: 198772561712280370}
   - component: {fileID: 199063477761014880}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Tracer_Round
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14987,13 +14973,13 @@ GameObject:
   - component: {fileID: 1018083312031893792}
   - component: {fileID: 4811969026319341050}
   - component: {fileID: 3058013490034114678}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Attack_Radius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2112554900511233522
 Transform:
   m_ObjectHideFlags: 0

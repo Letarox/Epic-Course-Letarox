@@ -31,8 +31,15 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     private void Start()
     {
         _enemiesPool = GenerateEnemies(_enemiesInitialWave);
-        //_towersPool = GenerateTower(_towersInitially);
-        StartCoroutine(WaveSpawn());
+        //_towersPool = GenerateTower(_towersInitially);        
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(WaveSpawn());
+        }
     }
 
     IEnumerator WaveSpawn()
