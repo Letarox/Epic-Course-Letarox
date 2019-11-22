@@ -6,11 +6,13 @@ public class TowerSpot : MonoBehaviour
 {
     private ParticleSystem _greenParticle;
     private MeshRenderer _radius;
+
     [SerializeField]
     private bool _isUsed = false;
     private bool _onMe = false;
-    private GameObject _spotTower = null;
-    private ITower _towerAI;
+
+    private GameObject _tower = null;
+    private ITower _towerScript;
 
     [System.Obsolete]
     void Start()
@@ -18,6 +20,7 @@ public class TowerSpot : MonoBehaviour
         _greenParticle = GetComponentInChildren<ParticleSystem>();
         if (_greenParticle == null)
             Debug.LogError("Green particle is NULL on " + transform.name);
+
         _radius = this.transform.FindChild("Radius").GetComponent<MeshRenderer>();
         if (_radius == null)
             Debug.LogError("Radius is NULL on " + transform.name);
@@ -40,12 +43,14 @@ public class TowerSpot : MonoBehaviour
         if (active == true && _isUsed == false)
         {
             _greenParticle.Play();
+
             if (_onMe == true)
                 _radius.enabled = true;
         }
         else
         {
             _greenParticle.Stop();
+
             if (_radius.enabled == true)
                 _radius.enabled = false;
         }
@@ -56,12 +61,14 @@ public class TowerSpot : MonoBehaviour
         if (active == true && _isUsed == true)
         {
             _greenParticle.Play();
+
             if (_onMe == true)
                 _radius.enabled = true;
         }
         else
         {
             _greenParticle.Stop();
+
             if (_radius.enabled == true)
                 _radius.enabled = false;
         }
@@ -138,21 +145,23 @@ public class TowerSpot : MonoBehaviour
     public void SetTower(GameObject obj)
     {
         _isUsed = true;
-        _spotTower = obj;
-        _spotTower.SetActive(true);
-        _towerAI = _spotTower.GetComponent<ITower>();
-        if (_towerAI == null)
+        _greenParticle.Stop();
+        _tower = obj;
+        _tower.SetActive(true);
+        _towerScript = _tower.GetComponent<ITower>();
+
+        if (_towerScript == null)
             Debug.LogError("TowerAI is NULL on " + transform.name);
-        _greenParticle.Stop();        
+        
     }
 
     public void SellTower()
     {
-        GameManager.Instance.AddFunds(SaleManager.Instance.GetTowerCost(_towerAI.GetTowerType()));        
+        GameManager.Instance.AddFunds(_towerScript.WarfundCost);
         _isUsed = false;
-        _towerAI.Hide();
-        _spotTower = null;
-        _towerAI = null;
+        _towerScript.Hide();
+        _tower = null;
+        _towerScript = null;
         _greenParticle.Stop();
         _radius.enabled = false;
     }

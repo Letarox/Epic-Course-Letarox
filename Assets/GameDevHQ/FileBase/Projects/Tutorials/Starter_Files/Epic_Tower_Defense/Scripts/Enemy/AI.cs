@@ -21,6 +21,7 @@ public class AI : MonoBehaviour, IDamageble
 
     public int Health { get; set; }
     public int Warfunds { get; set; }
+    public int LivesCost { get; set; }
     public float Speed { get; set; }
 
     enum EnemyType
@@ -36,11 +37,13 @@ public class AI : MonoBehaviour, IDamageble
             case EnemyType.Tall_Mech:
                 Health = 100;
                 Warfunds = Random.Range(30, 51);
+                LivesCost = 1;
                 Speed = 2.2f;
                 break;
             case EnemyType.Big_Mech:
                 Health = 150;
                 Warfunds = Random.Range(45, 76);
+                LivesCost = 2;
                 Speed = 1.8f;
                 break;
             default:
@@ -80,10 +83,14 @@ public class AI : MonoBehaviour, IDamageble
         _agent.speed = _speed;
     }
 
-    public void Hide()
+    void Explode()
     {
         GameObject gO = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
         Destroy(gO, 5f);
+    }
+
+    public void Hide()
+    {
         this.gameObject.SetActive(false);
     }
 
@@ -92,11 +99,14 @@ public class AI : MonoBehaviour, IDamageble
         return (int)_enemyType;
     }
 
-    public void Damage(int damageAmount)
+    public void Damage(GameObject source, int damageAmount)
     {
         Health -= damageAmount;
         if (Health <= 0)
         {
+            ITower towerScript = source.GetComponent<ITower>();
+            if(towerScript != null)
+                towerScript.CleanTarget();
             GameManager.Instance.AddFunds(Warfunds);
             StartCoroutine(DeathRoutine());
         }
@@ -108,5 +118,6 @@ public class AI : MonoBehaviour, IDamageble
         _agent.speed = 0f;
         yield return new WaitForSeconds(0.75f);
         Hide();
+        Explode();
     }
 }

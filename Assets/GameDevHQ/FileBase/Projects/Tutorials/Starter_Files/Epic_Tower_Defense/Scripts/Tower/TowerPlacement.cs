@@ -8,9 +8,9 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
     [SerializeField]
     private GameObject[] _decoyTowers = new GameObject[2];
     private GameObject _activeTowerMouseDrag;
+
     private bool _isSummoning = false;
     private bool _isRemoving = false;
-    [SerializeField]
     private bool _onSpot = false;
     private int _towerType;
 
@@ -60,17 +60,17 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
                 if (OnSale != null)
                     OnSale(false);
             }
+
             if(_activeTowerMouseDrag != null)
                 _activeTowerMouseDrag.SetActive(false);
         }
 
-        TowerSummon();
-        TowerRemove();        
+        TowerSummon();        
     }
 
     void TowerSummon()
     {
-        if(_isSummoning == true && _onSpot == false)
+        if(_isSummoning == true && _onSpot == false) //  && _onSpot == false
         {
             Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
@@ -80,15 +80,6 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
                 target.y = 0f;
                 _activeTowerMouseDrag.transform.position = target;
             }
-        }
-    }
-
-    void TowerRemove()
-    {
-        if (_isRemoving == true && _onSpot == false)
-        {
-            Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
         }
     }
 

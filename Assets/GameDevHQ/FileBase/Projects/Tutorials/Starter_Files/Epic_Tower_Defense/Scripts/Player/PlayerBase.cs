@@ -13,8 +13,12 @@ public class PlayerBase : MonoBehaviour
     {
         if(other.tag == "Enemy")
         {
-            GameManager.Instance.ChangeLives(1);
-            other.GetComponent<AI>().Hide();
+            AI enemyAI = other.GetComponent<AI>();
+            if(enemyAI != null)
+            {
+                GameManager.Instance.ChangeLives(enemyAI.LivesCost);
+                enemyAI.Hide();
+            }            
         }
     }
 }

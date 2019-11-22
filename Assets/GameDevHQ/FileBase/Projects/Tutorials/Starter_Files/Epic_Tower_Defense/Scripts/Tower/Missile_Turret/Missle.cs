@@ -66,7 +66,7 @@ namespace GameDevHQ.FileBase.Missle_Launcher.Missle
 
             if (_thrust == true) //if thrust is true
             {
-                _rigidbody.useGravity = true; //enable gravity 
+                _rigidbody.useGravity = true; //enable gravity
                 _rigidbody.velocity = transform.forward * _power; //set velocity multiplied by the power variable
                 _thrust = false; //set thrust bool to false
                 _trackRotation = true; //track rotation bool set to true

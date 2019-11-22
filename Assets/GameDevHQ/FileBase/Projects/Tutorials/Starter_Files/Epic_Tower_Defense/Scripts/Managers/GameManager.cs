@@ -21,14 +21,15 @@ public class GameManager : MonoSingleton<GameManager>
         _warFunds -= fundsAmount;
     }
 
-    public void ChangeLives(int livesAmouht)
+    public void ChangeLives(int livesAmount)
     {
-        _lives -= livesAmouht;
+        _lives -= livesAmount;
+
         if (_lives <= 0)
-        {
             _isGameOver = true;
+
+        if(_isGameOver == true)
             Time.timeScale = 0;
-        }
     }
 
     public int GetFunds()

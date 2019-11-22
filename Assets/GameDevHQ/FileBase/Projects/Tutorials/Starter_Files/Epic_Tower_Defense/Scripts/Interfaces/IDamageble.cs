@@ -6,6 +6,7 @@ public interface IDamageble
 {
     int Health { get; set; }
     int Warfunds { get; set; }
+    int LivesCost { get; set; }
     float Speed { get; set; }
-    void Damage(int damageAmount);
+    void Damage(GameObject source, int damageAmount);
 }

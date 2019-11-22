@@ -60,7 +60,7 @@ namespace GameDevHQ.FileBase.Missle_Launcher
             if (_canFire <= Time.time)
             {
                 _canFire = Time.time + FireRate;
-                _targetDamagable.Damage(Damage);
+                _targetDamagable.Damage(this.gameObject, Damage);
             }
         }
 
@@ -180,6 +180,11 @@ namespace GameDevHQ.FileBase.Missle_Launcher
                     _target = SetEnemyTarget();
                 }
             }
+        }
+        public void CleanTarget()
+        {
+            _attackQueue.Remove(_target);
+            _target = null;
         }
     }
 }

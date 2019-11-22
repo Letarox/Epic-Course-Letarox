@@ -19,12 +19,6 @@ public class SaleManager : MonoSingleton<SaleManager>
         _towersPool = GenerateTower(_towersInitially);
     }
 
-    private int[] _towerTypeCost = new int[2] { 100, 150 };
-    public int GetTowerCost(int type)
-    {
-        return _towerTypeCost[type];
-    }
-
     List<GameObject> GenerateTower(int amountOfTowers)
     {
         for (int i = 0; i < amountOfTowers; i++)
@@ -47,6 +41,7 @@ public class SaleManager : MonoSingleton<SaleManager>
             ITower towerAI = tower.GetComponent<ITower>();
             if (towerAI == null)
                 Debug.LogError("TowerAI is NULL on the Sale Manager");
+
             if (tower.activeInHierarchy == false && towerAI.GetTowerType() == type)
             {
                 //tower.SetActive(true);
