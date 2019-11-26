@@ -51,12 +51,6 @@ namespace GameDevHQ.FileBase.Gatling_Gun
             Dual_Gattling_Gun,
             Dual_Missile_Turret
         }
-
-        public void Hide()
-        {
-            this.gameObject.SetActive(false);
-        }
-
         public void Shoot(GameObject target)
         {
             Vector3 direction = target.transform.position - transform.position;
@@ -190,6 +184,9 @@ namespace GameDevHQ.FileBase.Gatling_Gun
             _attackQueue.Remove(_target);
             _target = null;
         }
+        public void Hide()
+        {
+            this.gameObject.SetActive(false);
+        }
     }
-
 }

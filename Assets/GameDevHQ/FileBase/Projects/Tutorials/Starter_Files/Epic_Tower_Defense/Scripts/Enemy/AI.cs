@@ -30,30 +30,9 @@ public class AI : MonoBehaviour, IDamageble
         Big_Mech
     }
 
-    void SetStats()
-    {
-        switch (_enemyType)
-        {
-            case EnemyType.Tall_Mech:
-                Health = 100;
-                Warfunds = Random.Range(30, 51);
-                LivesCost = 1;
-                Speed = 2.2f;
-                break;
-            case EnemyType.Big_Mech:
-                Health = 150;
-                Warfunds = Random.Range(45, 76);
-                LivesCost = 2;
-                Speed = 1.8f;
-                break;
-            default:
-                break;
-        }
-    }
-
     void OnEnable()
     {
-        SetStats();
+        GameManager.Instance.SetEnemyStats(this.gameObject);
         _agent = GetComponent<NavMeshAgent>();
         _target = GameObject.Find("Player_Base");
         _anim = GetComponent<Animator>();
@@ -73,11 +52,6 @@ public class AI : MonoBehaviour, IDamageble
         _speed = _agent.speed;
     }
 
-    void Update()
-    {
-
-    }
-
     void OnValidate()
     {
         _agent.speed = _speed;
@@ -94,7 +68,7 @@ public class AI : MonoBehaviour, IDamageble
         this.gameObject.SetActive(false);
     }
 
-    public int ReturnEnemyType()
+    public int GetEnemyType()
     {
         return (int)_enemyType;
     }
@@ -106,16 +80,19 @@ public class AI : MonoBehaviour, IDamageble
         {
             ITower towerScript = source.GetComponent<ITower>();
             if(towerScript != null)
+            {
                 towerScript.CleanTarget();
-            GameManager.Instance.AddFunds(Warfunds);
-            StartCoroutine(DeathRoutine());
+                GameManager.Instance.AddFunds(Warfunds);
+                StartCoroutine(DeathRoutine());
+            }                
         }
     }
 
     IEnumerator DeathRoutine()
     {
         _anim.SetTrigger("Dead");
-        _agent.speed = 0f;
+        //_agent.speed = 0f;
+        _agent.isStopped = true;
         yield return new WaitForSeconds(0.75f);
         Hide();
         Explode();

@@ -74,7 +74,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             AI enemyAI = enemy.GetComponent<AI>();
             if (enemyAI == null)
                 Debug.LogError("EnemyAI is NULL on the Spawn Manager");
-            if(enemy.activeInHierarchy == false && enemyAI.ReturnEnemyType() == type)
+            if(enemy.activeInHierarchy == false && enemyAI.GetEnemyType() == type)
             {
                 enemy.SetActive(true);
                 enemy.transform.position = _spawnLocation.position;
