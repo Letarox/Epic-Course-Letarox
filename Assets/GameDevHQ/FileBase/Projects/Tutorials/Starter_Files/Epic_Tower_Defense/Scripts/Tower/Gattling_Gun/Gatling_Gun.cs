@@ -32,6 +32,9 @@ namespace GameDevHQ.FileBase.Gatling_Gun
         [SerializeField]
         private List<GameObject> _attackQueue = new List<GameObject>();
 
+        [SerializeField]
+        private GameObject _playerBase;
+
         private GameObject _target = null;
         private IDamageble _targetDamagable;
 
@@ -70,21 +73,14 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 
         void Awake()
         {
-            switch (_towerType)
-            {
-                case TowerType.Gattling_Gun:
-                    Damage = 10;
-                    WarfundCost = 100;
-                    FireRate = 0.25f;
-                    break;
-                case TowerType.Missile_Turret:
-                    Damage = 20;
-                    WarfundCost = 150;
-                    FireRate = 2f;
-                    break;
-                default:
-                    break;
-            }
+            GameManager.Instance.SetTowerStats(this.gameObject);
+        }
+
+        void OnEnable()
+        {
+            _playerBase = GameObject.Find("Player_Base");
+            if (_playerBase == null)
+                Debug.LogError("Player Base is NULL on " + transform.name);
         }
 
         void Start()

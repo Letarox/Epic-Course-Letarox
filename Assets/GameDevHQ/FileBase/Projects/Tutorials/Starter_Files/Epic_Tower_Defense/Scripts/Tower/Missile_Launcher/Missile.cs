@@ -23,12 +23,13 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
         private float _power; //power of the rocket
         [SerializeField] //fuse delay of the rocket
         private float _fuseDelay;
+        private float _destroyTimer;
 
         private Rigidbody _rigidbody; //reference to the rigidbody of the rocket
         private AudioSource _audioSource; //reference to the audiosource of the rocket
         
         private bool _launched = false; //bool for if the rocket has launched
-        private float _initialLaunchTime = 2.0f; //initial launch time for the rocket
+        private float _initialLaunchTime = 1.0f; //initial launch time for the rocket
         private bool _thrust; //bool to enable the rocket thrusters
 
         private bool _fuseOut = false; //bool for if the rocket fuse
@@ -39,26 +40,29 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
 
         private ITower _parentTower;
 
-        // Use this for initialization
         IEnumerator Start()
         {
             _rigidbody = GetComponent<Rigidbody>(); //assign the rigidbody component 
             _audioSource = GetComponent<AudioSource>(); //assign the audiosource component
             _audioSource.pitch = Random.Range(0.7f, 1.9f); //randomize the pitch of the rocket audio
             _particle.Play(); //play the particles of the rocket
-            _audioSource.Play(); //play the rocket sound            
+            _audioSource.Play(); //play the rocket sound
 
             yield return new WaitForSeconds(_fuseDelay); //wait for the fuse delay
 
-            _initialLaunchTime = Time.time + 0.5f; //set the initial launch time
+            _initialLaunchTime = Time.time + 0.1f; //set the initial launch time
             _fuseOut = true; //set fuseOut to true
             _launched = true; //set the launch bool to true 
             _thrust = false; //set thrust bool to false
 
         }
+        void Update()
+        {
+            _destroyTimer -= Time.deltaTime;
+            if (_destroyTimer <= 0f)
+                Hide();
+        }
 
-
-        // Update is called once per frame
         void FixedUpdate()
         {
             if (_fuseOut == false) //check if fuseOut is false
@@ -120,7 +124,8 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
             _launchSpeed = launchSpeed; //set the launch speed
             _power = power; //set the power
             _fuseDelay = fuseDelay; //set the fuse delay
-            Destroy(this.gameObject, destroyTimer); //destroy the rocket after destroyTimer 
+            _destroyTimer = destroyTimer;
+            //Destroy(this.gameObject, destroyTimer); //destroy the rocket after destroyTimer 
             _parentTower = parent.GetComponent<ITower>();
             if (_parentTower == null)
                 Debug.LogError("Parent is NULL on " + transform.name);
@@ -128,12 +133,23 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
 
         private void OnCollisionEnter(Collision other)
         {
-            _parentTower.Shoot(other.gameObject);
+            if(other.transform.Equals(_target) && other.gameObject.activeInHierarchy == true)
+            {
+                _parentTower.Shoot(other.gameObject);
 
-            if (_explosionPrefab != null)
-                Instantiate(_explosionPrefab, transform.position, Quaternion.identity); //instantiate explosion
+                if (_explosionPrefab != null)
+                {
+                    GameObject explosion = SpawnManager.Instance.RequestExplosion(0, this.gameObject); //instantiate explosion
+                }                
+            }
+            //Destroy(this.gameObject); //destroy the rocket (this)
+            Hide();
+        }
 
-            Destroy(this.gameObject); //destroy the rocket (this)
+        public void Hide()
+        {
+            SpawnManager.Instance.ReAssignParent(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 }

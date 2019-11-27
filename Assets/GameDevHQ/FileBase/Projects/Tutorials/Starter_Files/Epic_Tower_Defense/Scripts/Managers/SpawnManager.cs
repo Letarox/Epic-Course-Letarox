@@ -11,6 +11,8 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     [SerializeField]
     private int _enemiesInitialWave;
+    [SerializeField]
+    private int _missilesInitially;
     //[SerializeField]
     //private int _towersInitially;
 
@@ -18,6 +20,21 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     private List<GameObject> _enemiesPrefabs;
     [SerializeField]
     private List<GameObject> _enemiesPool;
+
+    [SerializeField]
+    private List<GameObject> _explosionsPrefabs;
+    [SerializeField]
+    private List<GameObject> _explosionsPool;
+    [SerializeField]
+    private GameObject _explosionContainer;
+
+    [SerializeField]
+    private GameObject _missilePrefab;
+    [SerializeField]
+    private List<GameObject> _missilePool;
+    [SerializeField]
+    private GameObject _missileContainer;
+
 
     //[SerializeField]
     //private List<GameObject> _towersPrefabs;
@@ -32,6 +49,8 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     {
         _enemiesPool = GenerateEnemies(_enemiesInitialWave);
         //_towersPool = GenerateTower(_towersInitially);        
+        _explosionsPool = GenerateExplosions();
+        _missilePool = GenerateMissiles(_missilesInitially);
     }
 
     void Update()
@@ -89,6 +108,89 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         newEnemy.transform.position = _spawnLocation.position;
 
         return newEnemy;
+    }
+
+    public Vector3 GetSpawnLocation()
+    {
+        return _spawnLocation.position;
+    }
+
+    List<GameObject> GenerateExplosions()
+    {
+        for (int i = 0; i < _explosionsPrefabs.Count; i++)
+        {
+            GameObject explosion = Instantiate(_explosionsPrefabs[i]);
+            explosion.transform.parent = _explosionContainer.transform;
+            explosion.SetActive(false);
+            _explosionsPool.Add(explosion);
+        }
+
+        return _explosionsPool;
+    }
+
+    public GameObject RequestExplosion(int type, GameObject requester)
+    {
+        //pass myself as a parameter to request for the explosion type
+        foreach (var explosion in _explosionsPool)
+        {
+            Explosion explosionScript = explosion.GetComponent<Explosion>();
+            if (explosionScript == null)
+                Debug.LogError("Explosion Script is NULL on " + transform.name);
+            if (explosion.activeInHierarchy == false && explosionScript.GetExplosionType() == type)
+            {
+                explosion.SetActive(true);
+                explosion.transform.position = requester.transform.position;
+                return explosion;
+            }
+        }
+
+        GameObject newExplosion = Instantiate(_explosionsPrefabs[type], requester.transform);
+        newExplosion.transform.parent = _explosionContainer.transform;
+        newExplosion.SetActive(true);
+        _explosionsPool.Add(newExplosion);
+        newExplosion.transform.position = requester.transform.position;
+
+        return newExplosion;
+    }
+
+    List<GameObject> GenerateMissiles(int amountOfMissiles)
+    {
+        for (int i = 0; i < amountOfMissiles; i++)
+        {
+            GameObject missile = Instantiate(_missilePrefab, _spawnLocation);
+            missile.transform.parent = _missileContainer.transform;
+            missile.SetActive(false);
+            _missilePool.Add(missile);
+        }
+
+        return _missilePool;
+    }
+
+    public GameObject RequestMissile(GameObject parentPosition)
+    {
+        //check if the type is the same that we requested and return it
+        foreach (var missile in _missilePool)
+        {
+            if (missile.activeInHierarchy == false)
+            {
+                missile.SetActive(true);
+                missile.transform.position = parentPosition.transform.position;
+                return missile;
+            }
+        }
+
+        GameObject newMissile = Instantiate(_missilePrefab, parentPosition.transform);
+        newMissile.transform.parent = _missileContainer.transform;
+        newMissile.SetActive(true);
+        _missilePool.Add(newMissile);
+        newMissile.transform.position = parentPosition.transform.position;
+
+        return newMissile;
+    }
+
+    public void ReAssignParent(GameObject missile)
+    {
+        missile.transform.parent = _missileContainer.transform;
     }
 
     /*List<GameObject> GenerateTower(int amountOfTowers)

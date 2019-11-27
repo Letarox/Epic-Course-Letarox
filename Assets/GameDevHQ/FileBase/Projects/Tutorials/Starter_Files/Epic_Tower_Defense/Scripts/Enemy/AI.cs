@@ -12,12 +12,13 @@ public class AI : MonoBehaviour, IDamageble
     [SerializeField]
     private float _speed;
     private Animator _anim;
+    private BoxCollider _collider;
 
     [SerializeField]
     private EnemyType _enemyType;
 
     [SerializeField]
-    private GameObject _explosionPrefab;
+    private GameObject[] _explosionPrefab;
 
     public int Health { get; set; }
     public int Warfunds { get; set; }
@@ -36,6 +37,7 @@ public class AI : MonoBehaviour, IDamageble
         _agent = GetComponent<NavMeshAgent>();
         _target = GameObject.Find("Player_Base");
         _anim = GetComponent<Animator>();
+        _collider = GetComponent<BoxCollider>();
 
         if (_agent == null)
             Debug.LogError("NavMesh Agent is NULL on " + transform.name);
@@ -48,6 +50,12 @@ public class AI : MonoBehaviour, IDamageble
         if (_anim == null)
             Debug.LogError("Animator is NULL on " + transform.name);
 
+        if (_collider == null)
+            Debug.LogError("Box Collider is NULL on " + transform.name);
+
+        transform.position = SpawnManager.Instance.GetSpawnLocation();
+
+        _collider.enabled = true;
         _agent.speed = Speed;
         _speed = _agent.speed;
     }
@@ -59,13 +67,13 @@ public class AI : MonoBehaviour, IDamageble
 
     void Explode()
     {
-        GameObject gO = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
-        Destroy(gO, 5f);
+        GameObject explosion = SpawnManager.Instance.RequestExplosion((1+(int)_enemyType), this.gameObject);
     }
 
     public void Hide()
     {
         this.gameObject.SetActive(false);
+        transform.position = SpawnManager.Instance.GetSpawnLocation();
     }
 
     public int GetEnemyType()
@@ -83,7 +91,8 @@ public class AI : MonoBehaviour, IDamageble
             {
                 towerScript.CleanTarget();
                 GameManager.Instance.AddFunds(Warfunds);
-                StartCoroutine(DeathRoutine());
+                if(this.gameObject.activeInHierarchy == true)
+                    StartCoroutine(DeathRoutine());
             }                
         }
     }
@@ -91,10 +100,10 @@ public class AI : MonoBehaviour, IDamageble
     IEnumerator DeathRoutine()
     {
         _anim.SetTrigger("Dead");
-        //_agent.speed = 0f;
+        _collider.enabled = false;
         _agent.isStopped = true;
         yield return new WaitForSeconds(0.75f);
-        Hide();
         Explode();
+        Hide();        
     }
 }

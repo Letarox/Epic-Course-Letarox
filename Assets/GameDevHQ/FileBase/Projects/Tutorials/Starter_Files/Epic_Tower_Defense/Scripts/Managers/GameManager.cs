@@ -10,7 +10,29 @@ public class GameManager : MonoSingleton<GameManager>
     private int _lives = 5;
 
     //private bool _isGameOver = false;
-
+    public void SetTowerStats(GameObject tower)
+    {
+        ITower towerAI = tower.GetComponent<ITower>();
+        if(towerAI != null)
+        {
+            int type = towerAI.GetTowerType();
+            switch (type)
+            {
+                case 0: // Gattling Gun
+                    towerAI.Damage = 10;
+                    towerAI.WarfundCost = 100;
+                    towerAI.FireRate = 0.25f;
+                    break;
+                case 1: //Missile Turret
+                    towerAI.Damage = 60;
+                    towerAI.WarfundCost = 150;
+                    towerAI.FireRate = 3f;
+                    break;
+                default:
+                    break;
+            }
+        }        
+    }
     public void SetEnemyStats(GameObject enemy)
     {
         AI enemyAI = enemy.GetComponent<AI>();

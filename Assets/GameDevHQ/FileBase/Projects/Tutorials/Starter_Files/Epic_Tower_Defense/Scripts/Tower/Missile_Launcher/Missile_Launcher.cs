@@ -74,31 +74,14 @@ namespace GameDevHQ.FileBase.Missile_Launcher
 
         void Awake()
         {
-            switch (_towerType)
-            {
-                case TowerType.Gattling_Gun:
-                    Damage = 10;
-                    WarfundCost = 100;
-                    FireRate = 0.25f;
-                    break;
-                case TowerType.Missile_Turret:
-                    Damage = 20;
-                    WarfundCost = 150;
-                    FireRate = 2f;
-                    break;
-                default:
-                    break;
-            }
-        }
-        private void Update()
-        {
-
+            GameManager.Instance.SetTowerStats(this.gameObject);
         }
 
         IEnumerator FireRocketsRoutine()
         {
-            
-            GameObject rocket = Instantiate(_missilePrefab) as GameObject; //instantiate a rocket
+
+            //GameObject rocket = Instantiate(_missilePrefab) as GameObject; //instantiate a rocket
+            GameObject rocket = SpawnManager.Instance.RequestMissile(this.gameObject);
 
                 rocket.transform.parent = _misslePositions[0].transform; //set the rockets parent to the missle launch position 
                 rocket.transform.localPosition = Vector3.zero; //set the rocket position values to zero
@@ -113,7 +96,7 @@ namespace GameDevHQ.FileBase.Missile_Launcher
 
                 yield return new WaitForSeconds(_reloadTime); //wait for reload time
                 _misslePositions[0].SetActive(true); //enable fake rocket to show ready to fire
-
+            
             _launched = false; //set launch bool to false
         }
         Transform SetEnemyTarget()
@@ -171,7 +154,7 @@ namespace GameDevHQ.FileBase.Missile_Launcher
             if (other.tag == "Enemy")
             {
                 _attackQueue.Remove(other.gameObject);
-                if (other.gameObject.Equals(_target))
+                if (other.gameObject.Equals(_target.gameObject))
                 {
                     _target = SetEnemyTarget();
                 }
@@ -179,11 +162,9 @@ namespace GameDevHQ.FileBase.Missile_Launcher
         }
         public void CleanTarget()
         {
-            if(_target.gameObject != null)
-            {
+            if(_target != null)
                 _attackQueue.Remove(_target.gameObject);
-                _target = null;
-            }                
+            _target = null;
         }
         public void Hide()
         {
