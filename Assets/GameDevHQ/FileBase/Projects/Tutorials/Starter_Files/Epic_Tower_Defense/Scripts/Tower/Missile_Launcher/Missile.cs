@@ -59,7 +59,9 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
         void Update()
         {
             _destroyTimer -= Time.deltaTime;
-            if (_destroyTimer <= 0f)
+            if (_target.gameObject.activeInHierarchy == false)
+                Hide();
+            else if (_destroyTimer <= 0f)
                 Hide();
         }
 
@@ -135,21 +137,34 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
         {
             if(other.transform.Equals(_target) && other.gameObject.activeInHierarchy == true)
             {
-                _parentTower.Shoot(other.gameObject);
-
+                //_parentTower.Shoot(other.gameObject);
                 if (_explosionPrefab != null)
                 {
                     GameObject explosion = SpawnManager.Instance.RequestExplosion(0, this.gameObject); //instantiate explosion
-                }                
+                    float radius = 1f;
+                    ExplosionDamage(this.transform.position, radius);
+                }
+                Hide();
             }
-            //Destroy(this.gameObject); //destroy the rocket (this)
-            Hide();
+            //Destroy(this.gameObject); //destroy the rocket (this)            
         }
 
         public void Hide()
         {
             SpawnManager.Instance.ReAssignParent(this.gameObject);
             this.gameObject.SetActive(false);
+        }
+
+        void ExplosionDamage(Vector3 center, float radius)
+        {
+            Collider[] enemiesHit = Physics.OverlapSphere(center, radius);
+            for(int i = 0; i < enemiesHit.Length; i++)
+            {
+                if (enemiesHit[i].tag == "Enemy")
+                {
+                    _parentTower.Shoot(enemiesHit[i].gameObject);
+                }
+            }
         }
     }
 }

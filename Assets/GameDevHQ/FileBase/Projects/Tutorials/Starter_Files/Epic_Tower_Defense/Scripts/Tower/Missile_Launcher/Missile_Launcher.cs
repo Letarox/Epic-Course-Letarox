@@ -18,7 +18,6 @@ namespace GameDevHQ.FileBase.Missile_Launcher
             Homing
         }
 
-
         [SerializeField]
         private GameObject _missilePrefab; //holds the missle gameobject to clone
         [SerializeField]
@@ -41,10 +40,10 @@ namespace GameDevHQ.FileBase.Missile_Launcher
         [SerializeField]
         private Transform _target; //Who should the rocket fire at?
 
+        private GameObject rocket;
+
         [SerializeField]
         private List<GameObject> _attackQueue = new List<GameObject>();
-
-        private IDamageble _targetDamagable;
 
         private float _canFire = -1f;
 
@@ -64,7 +63,11 @@ namespace GameDevHQ.FileBase.Missile_Launcher
         }
         public void Shoot(GameObject target)
         {
-            _targetDamagable.Damage(this.gameObject, Damage);
+            IDamageble targetScript = target.GetComponent<IDamageble>();
+            if(targetScript != null)
+            {
+                targetScript.Damage(this.gameObject,Damage);
+            }
         }
 
         public int GetTowerType()
@@ -81,7 +84,7 @@ namespace GameDevHQ.FileBase.Missile_Launcher
         {
 
             //GameObject rocket = Instantiate(_missilePrefab) as GameObject; //instantiate a rocket
-            GameObject rocket = SpawnManager.Instance.RequestMissile(this.gameObject);
+            rocket = SpawnManager.Instance.RequestMissile(this.gameObject);
 
                 rocket.transform.parent = _misslePositions[0].transform; //set the rockets parent to the missle launch position 
                 rocket.transform.localPosition = Vector3.zero; //set the rocket position values to zero
@@ -105,9 +108,6 @@ namespace GameDevHQ.FileBase.Missile_Launcher
             {
                 if (enemy.activeInHierarchy == true)
                 {
-                    _targetDamagable = enemy.GetComponent<IDamageble>();
-                    if (_targetDamagable == null)
-                        Debug.LogError("IDamagable is NULL on " + enemy.transform.name);
                     return enemy.transform;
                 }
             }
@@ -123,8 +123,7 @@ namespace GameDevHQ.FileBase.Missile_Launcher
                 transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
                 _launched = true; //set the launch bool to true
                 StartCoroutine(FireRocketsRoutine()); //start a coroutine that fires the rockets
-            }
-            
+            }            
         }
 
         void OnTriggerEnter(Collider other)
@@ -165,6 +164,7 @@ namespace GameDevHQ.FileBase.Missile_Launcher
             if(_target != null)
                 _attackQueue.Remove(_target.gameObject);
             _target = null;
+            rocket.GetComponent<GameDevHQ.FileBase.Missile_Launcher.Missile.Missile>().Hide();
         }
         public void Hide()
         {

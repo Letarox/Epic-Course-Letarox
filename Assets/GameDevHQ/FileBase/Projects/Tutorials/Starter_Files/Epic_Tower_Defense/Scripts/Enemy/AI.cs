@@ -93,7 +93,7 @@ public class AI : MonoBehaviour, IDamageble
                 GameManager.Instance.AddFunds(Warfunds);
                 if(this.gameObject.activeInHierarchy == true)
                     StartCoroutine(DeathRoutine());
-            }                
+            }
         }
     }
 
@@ -104,6 +104,6 @@ public class AI : MonoBehaviour, IDamageble
         _agent.isStopped = true;
         yield return new WaitForSeconds(0.75f);
         Explode();
-        Hide();        
+        Hide();
     }
 }

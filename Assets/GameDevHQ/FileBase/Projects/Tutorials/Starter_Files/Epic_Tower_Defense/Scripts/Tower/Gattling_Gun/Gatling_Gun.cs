@@ -57,6 +57,8 @@ namespace GameDevHQ.FileBase.Gatling_Gun
         public void Shoot(GameObject target)
         {
             Vector3 direction = target.transform.position - transform.position;
+            //direction.x = 0f;
+            //direction.z = 0f;
             transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
             //transform.LookAt(target.transform);
             if(_canFire <= Time.time)
@@ -146,6 +148,13 @@ namespace GameDevHQ.FileBase.Gatling_Gun
                 _attackQueue.Add(other.gameObject);
                 if (_target == null)
                     _target = SetEnemyTarget();
+                /* else
+                {
+                    float newDistance = other.transform.position.x - _playerBase.transform.position.x;
+                    float oldDistance = _target.transform.position.x - _playerBase.transform.position.x;
+                    if (newDistance > oldDistance)
+                        _target = other.gameObject;
+                } */
             }
         }
 
@@ -175,11 +184,13 @@ namespace GameDevHQ.FileBase.Gatling_Gun
                 }
             }
         }
+
         public void CleanTarget()
         {
             _attackQueue.Remove(_target);
             _target = null;
         }
+
         public void Hide()
         {
             this.gameObject.SetActive(false);

@@ -26,7 +26,7 @@ public class GameManager : MonoSingleton<GameManager>
                 case 1: //Missile Turret
                     towerAI.Damage = 60;
                     towerAI.WarfundCost = 150;
-                    towerAI.FireRate = 3f;
+                    towerAI.FireRate = 2.5f;
                     break;
                 default:
                     break;

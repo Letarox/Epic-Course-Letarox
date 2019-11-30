@@ -5074,6 +5074,7 @@ MonoBehaviour:
   bulletCasings: {fileID: 198239830521320308}
   fireSound: {fileID: 8300000, guid: 08e0cb88300e54b09aa0deb684c3a3de, type: 3}
   _attackQueue: []
+  _playerBase: {fileID: 0}
   _towerType: 0
 --- !u!82 &82825197453988258
 AudioSource:
@@ -5181,11 +5182,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 90
   m_CollisionDetection: 0
 --- !u!1 &1481110104042698
 GameObject:
