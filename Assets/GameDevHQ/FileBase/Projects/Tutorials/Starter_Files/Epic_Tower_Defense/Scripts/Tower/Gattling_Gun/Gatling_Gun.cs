@@ -56,11 +56,6 @@ namespace GameDevHQ.FileBase.Gatling_Gun
         }
         public void Shoot(GameObject target)
         {
-            Vector3 direction = target.transform.position - transform.position;
-            //direction.x = 0f;
-            //direction.z = 0f;
-            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
-            //transform.LookAt(target.transform);
             if(_canFire <= Time.time)
             {
                 _canFire = Time.time + FireRate;
@@ -97,7 +92,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 
         void Update()
         {
-
+            
         }
 
         void Attack()
@@ -162,6 +157,11 @@ namespace GameDevHQ.FileBase.Gatling_Gun
         {
             if(_target != null && _target.activeInHierarchy == true)
             {
+                Vector3 direction = _target.transform.position - transform.position;
+                transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+                Vector3 rot = transform.localEulerAngles;
+                rot.x = 0f;
+                transform.localEulerAngles = rot;
                 Attack();
                 Shoot(_target);
             }

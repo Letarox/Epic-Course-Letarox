@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
         _moveY = Input.GetAxis("Vertical");
 
         //move the camera based on the keys
-        Vector3 pos = new Vector3(-_moveY, 0, _moveZ);        
+        Vector3 pos = new Vector3(-_moveY, 0, _moveZ);
         transform.Translate(pos * _speed * Time.deltaTime);
 
         Vector3 activePos = transform.position;

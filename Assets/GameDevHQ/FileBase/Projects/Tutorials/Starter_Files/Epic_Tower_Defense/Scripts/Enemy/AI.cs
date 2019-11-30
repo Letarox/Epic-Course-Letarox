@@ -67,7 +67,7 @@ public class AI : MonoBehaviour, IDamageble
 
     void Explode()
     {
-        GameObject explosion = SpawnManager.Instance.RequestExplosion((1+(int)_enemyType), this.gameObject);
+        GameObject explosion = SpawnManager.Instance.RequestExplosion((1+(int)_enemyType), this.gameObject); //Base is 1 + type since the small explosion is being used by the missile
     }
 
     public void Hide()
@@ -102,7 +102,8 @@ public class AI : MonoBehaviour, IDamageble
         _anim.SetTrigger("Dead");
         _collider.enabled = false;
         _agent.isStopped = true;
-        yield return new WaitForSeconds(0.75f);
+        float delay = _anim.GetCurrentAnimatorClipInfo(0).Length;
+        yield return new WaitForSeconds(delay);
         Explode();
         Hide();
     }

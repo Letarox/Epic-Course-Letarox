@@ -119,8 +119,6 @@ namespace GameDevHQ.FileBase.Missile_Launcher
             if(_canFire <= Time.time && _launched == false)
             {
                 _canFire = Time.time + FireRate;
-                Vector3 direction = _target.position - transform.position;
-                transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
                 _launched = true; //set the launch bool to true
                 StartCoroutine(FireRocketsRoutine()); //start a coroutine that fires the rockets
             }            
