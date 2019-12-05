@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class TowerSpot : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class TowerSpot : MonoBehaviour
     private GameObject _tower = null;
     private ITower _towerScript;
 
-    private GameObject _upgradeGattlingGun;
+    public static event Action<int, int, GameObject> OnSpotClick;
 
     [System.Obsolete]
     void Start()
@@ -82,7 +83,7 @@ public class TowerSpot : MonoBehaviour
         TowerPlacement.Instance.SpotCheck(true);        
         bool summoning = TowerPlacement.Instance.GetSumonning();
         bool removing = TowerPlacement.Instance.GetRemoving();
-        if ((summoning == true && _isUsed == false) || (removing == true && _isUsed == true))
+        if ((summoning == true && _isUsed == false) || (removing == true && _isUsed == true) || _isUsed == true)
         {
             _radius.enabled = true;
             TowerPlacement.Instance.StayAtSpotPosition(this.transform.position);
@@ -112,8 +113,8 @@ public class TowerSpot : MonoBehaviour
             ITower iTower = newTower.GetComponent<ITower>();
             if (iTower != null)
             {
-                bool availableSpot = GetFundsAvailability(iTower.WarfundCost);
-                if(availableSpot == false)
+                bool hasMoney = GetFundsAvailability(iTower.WarfundCost);
+                if(hasMoney == true && _isUsed == false)
                 {
                     GameManager.Instance.RemoveFunds(iTower.WarfundCost);
                     UIMananger.Instance.UpdateWarfunds(GameManager.Instance.GetFunds());
@@ -132,19 +133,20 @@ public class TowerSpot : MonoBehaviour
         }
         else if(_isUsed == true && removing == false)
         {
-
+            if (OnSpotClick != null)
+                OnSpotClick(_towerScript.GetTowerType(), _towerScript.SellAmount, this.gameObject);
         }
     }
 
     public bool GetFundsAvailability(int warfundCost)
     {
-        if((GameManager.Instance.GetFunds() >= warfundCost) && _isUsed == false)
+        if(GameManager.Instance.GetFunds() >= warfundCost)
         {
-            return false;
+            return true;
         }
         else
         {
-            return true;
+            return false;
         }
         
     }
@@ -162,9 +164,55 @@ public class TowerSpot : MonoBehaviour
         
     }
 
+    public void UpgradeTower()
+    {
+        int towerType = _towerScript.GetTowerType();
+        switch (towerType)
+        {
+            case 0: //Gattling Gun                
+                GameObject dualGattling = SaleManager.Instance.RequestTower(2, this.transform.position);
+                ITower dualGattlingScript = dualGattling.GetComponent<ITower>();
+                if (dualGattlingScript != null)
+                {
+                    if((GameManager.Instance.GetFunds() >= dualGattlingScript.WarfundCost))
+                    {
+                        _towerScript.Hide();
+                        GameManager.Instance.RemoveFunds(dualGattlingScript.WarfundCost);
+                        UIMananger.Instance.UpdateWarfunds(GameManager.Instance.GetFunds());
+                        SetTower(dualGattling);
+                    }
+                    else
+                    {
+                        dualGattling.SetActive(false);
+                    }
+                }                
+                break;
+            case 1: //Missile Turret
+                GameObject dualMissileTurret = SaleManager.Instance.RequestTower(3, this.transform.position);
+                ITower dualMissileTurretScript = dualMissileTurret.GetComponent<ITower>();
+                if (dualMissileTurretScript != null)
+                {
+                    if ((GameManager.Instance.GetFunds() >= dualMissileTurretScript.WarfundCost))
+                    {
+                        _towerScript.Hide();
+                        GameManager.Instance.RemoveFunds(dualMissileTurretScript.WarfundCost);
+                        UIMananger.Instance.UpdateWarfunds(GameManager.Instance.GetFunds());
+                        SetTower(dualMissileTurret);
+                    }
+                    else
+                    {
+                        dualMissileTurret.SetActive(false);
+                    }
+                }
+                break;
+            default:
+                    break;
+        }
+    }
+
     public void SellTower()
     {
-        GameManager.Instance.AddFunds(_towerScript.WarfundCost);
+        GameManager.Instance.AddFunds(_towerScript.SellAmount);
         UIMananger.Instance.UpdateWarfunds(GameManager.Instance.GetFunds());
         _isUsed = false;
         _towerScript.Hide();

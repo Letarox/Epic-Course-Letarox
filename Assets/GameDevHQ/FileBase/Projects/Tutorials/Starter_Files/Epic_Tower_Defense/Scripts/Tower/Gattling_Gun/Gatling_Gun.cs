@@ -52,6 +52,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 
         public int Damage { get; set; }
         public int WarfundCost { get; set; }
+        public int SellAmount { get; set; }
         public float FireRate { get; set; }
 
         [SerializeField]
@@ -59,10 +60,10 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 
         enum TowerType
         {
-            Gattling_Gun,
-            Missile_Turret,
-            Dual_Gattling_Gun,
-            Dual_Missile_Turret
+            Gattling_Gun, // 0
+            Missile_Turret, // 1
+            Dual_Gattling_Gun, // 2
+            Dual_Missile_Turret // 3
         }
         public void Shoot(GameObject target)
         {

@@ -23,7 +23,7 @@ public class SaleManager : MonoSingleton<SaleManager>
     {
         for (int i = 0; i < amountOfTowers; i++)
         {
-            int random = Random.Range(0, 2);
+            int random = Random.Range(0, 4);
             GameObject tower = Instantiate(_towersPrefabs[random]);
             tower.transform.parent = _towerContainer.transform;
             tower.SetActive(false);

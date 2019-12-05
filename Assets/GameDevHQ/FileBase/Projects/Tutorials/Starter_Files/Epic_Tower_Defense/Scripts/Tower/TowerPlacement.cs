@@ -17,6 +17,8 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
     public static event Action<bool> OnAvailable;
     public static event Action<bool> OnSale;
 
+    public static event Action OnCancel;
+
     void Update()
     {
         /*if(Input.GetKeyDown(KeyCode.Alpha1) && _isSummoning == false && _isRemoving == false)
@@ -37,16 +39,16 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
             _towerType = 1;
             if (OnAvailable != null)
                 OnAvailable(true);
-        }*/    
+        }    
 
         if(Input.GetKeyDown(KeyCode.Alpha3) && _isSummoning == false && _isRemoving == false)
         {
             _isRemoving = true;
             if (OnSale != null)
-                OnSale(true);
-        }
+                OnSale(true);            
+        }*/
 
-        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButton(1))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButton(1))
         {
             if(_isSummoning == true)
             {
@@ -61,7 +63,10 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
                     OnSale(false);
             }
 
-            if(_activeTowerMouseDrag != null)
+            if (OnCancel != null)
+                OnCancel();
+
+            if (_activeTowerMouseDrag != null)
                 _activeTowerMouseDrag.SetActive(false);
         }
 

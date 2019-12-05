@@ -21,21 +21,25 @@ public class GameManager : MonoSingleton<GameManager>
                 case 0: // Gattling Gun
                     towerAI.Damage = 10;
                     towerAI.WarfundCost = 100;
+                    towerAI.SellAmount = 80;
                     towerAI.FireRate = 0.25f;
                     break;
                 case 1: //Missile Turret
                     towerAI.Damage = 60;
                     towerAI.WarfundCost = 150;
+                    towerAI.SellAmount = 120;
                     towerAI.FireRate = 2.5f;
                     break;
                 case 2: //Dual Gatting Gun
                     towerAI.Damage = 20;
                     towerAI.WarfundCost = 400;
+                    towerAI.SellAmount = 320;
                     towerAI.FireRate = 0.25f;
                     break;
                 case 3: //Dual Missile Turret
                     towerAI.Damage = 60;
                     towerAI.WarfundCost = 500;
+                    towerAI.SellAmount = 400;
                     towerAI.FireRate = 2.25f;
                     break;
                 default:
@@ -53,13 +57,13 @@ public class GameManager : MonoSingleton<GameManager>
             {
                 case 0: //Tall Mech
                     enemyAI.Health = 100;
-                    enemyAI.Warfunds = Random.Range(30, 51);
+                    enemyAI.Warfunds = Random.Range(10, 26);
                     enemyAI.LivesCost = 1;
                     enemyAI.Speed = 2.2f;
                     break;
                 case 1: //Big Mech
                     enemyAI.Health = 180;
-                    enemyAI.Warfunds = Random.Range(45, 76);
+                    enemyAI.Warfunds = Random.Range(20, 51);
                     enemyAI.LivesCost = 2;
                     enemyAI.Speed = 1.8f;
                     break;
