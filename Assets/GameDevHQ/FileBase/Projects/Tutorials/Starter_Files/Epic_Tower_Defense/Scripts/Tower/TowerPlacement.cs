@@ -19,7 +19,7 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1) && _isSummoning == false && _isRemoving == false)
+        /*if(Input.GetKeyDown(KeyCode.Alpha1) && _isSummoning == false && _isRemoving == false)
         {
             _isSummoning = true;
             _activeTowerMouseDrag = _decoyTowers[0];
@@ -37,7 +37,7 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
             _towerType = 1;
             if (OnAvailable != null)
                 OnAvailable(true);
-        }        
+        }*/    
 
         if(Input.GetKeyDown(KeyCode.Alpha3) && _isSummoning == false && _isRemoving == false)
         {
@@ -66,6 +66,26 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
         }
 
         TowerSummon();        
+    }
+
+    public void GattlingSummon()
+    {
+        _isSummoning = true;
+        _activeTowerMouseDrag = _decoyTowers[0];
+        _activeTowerMouseDrag.SetActive(true);
+        _towerType = 0;
+        if (OnAvailable != null)
+            OnAvailable(true);
+    }
+
+    public void MissileTurretSummon()
+    {
+        _isSummoning = true;
+        _activeTowerMouseDrag = _decoyTowers[1];
+        _activeTowerMouseDrag.SetActive(true);
+        _towerType = 1;
+        if (OnAvailable != null)
+            OnAvailable(true);
     }
 
     void TowerSummon()

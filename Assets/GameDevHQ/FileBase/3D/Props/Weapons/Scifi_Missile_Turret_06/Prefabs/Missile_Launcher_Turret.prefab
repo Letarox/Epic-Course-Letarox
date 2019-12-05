@@ -867,6 +867,8 @@ MonoBehaviour:
   _reloadTime: 0
   _destroyTime: 3
   _target: {fileID: 0}
+  _misslePositionsLeft: []
+  _misslePositionsRight: []
   _attackQueue: []
   _towerType: 1
 --- !u!54 &6950788112154687746
@@ -976,7 +978,7 @@ GameObject:
   - component: {fileID: 2802889144558916942}
   - component: {fileID: 8895519681065559353}
   m_Layer: 2
-  m_Name: Sphere
+  m_Name: Attack_Radius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -40,7 +40,12 @@ namespace GameDevHQ.FileBase.Missile_Launcher
         [SerializeField]
         private Transform _target; //Who should the rocket fire at?
 
-        private GameObject rocket;
+        [SerializeField]
+        private GameObject[] _misslePositionsLeft; //array to hold the rocket positions on the turret
+        [SerializeField]
+        private GameObject[] _misslePositionsRight; //array to hold the rocket positions on the turret
+
+        private GameObject _rocket, _rocketLeft, _rocketRight;
 
         [SerializeField]
         private List<GameObject> _attackQueue = new List<GameObject>();
@@ -82,16 +87,17 @@ namespace GameDevHQ.FileBase.Missile_Launcher
 
         IEnumerator FireRocketsRoutine()
         {
+            if(_towerType == TowerType.Missile_Turret)
+            {
+                //GameObject rocket = Instantiate(_missilePrefab) as GameObject; //instantiate a rocket
+                _rocket = SpawnManager.Instance.RequestMissile(this.gameObject);
 
-            //GameObject rocket = Instantiate(_missilePrefab) as GameObject; //instantiate a rocket
-            rocket = SpawnManager.Instance.RequestMissile(this.gameObject);
+                _rocket.transform.parent = _misslePositions[0].transform; //set the rockets parent to the missle launch position 
+                _rocket.transform.localPosition = Vector3.zero; //set the rocket position values to zero
+                _rocket.transform.localEulerAngles = new Vector3(-90, 0, 0); //set the rotation values to be properly aligned with the rockets forward direction
+                _rocket.transform.parent = null; //set the rocket parent to null
 
-                rocket.transform.parent = _misslePositions[0].transform; //set the rockets parent to the missle launch position 
-                rocket.transform.localPosition = Vector3.zero; //set the rocket position values to zero
-                rocket.transform.localEulerAngles = new Vector3(-90, 0, 0); //set the rotation values to be properly aligned with the rockets forward direction
-                rocket.transform.parent = null; //set the rocket parent to null
-
-                rocket.GetComponent<GameDevHQ.FileBase.Missile_Launcher.Missile.Missile>().AssignMissleRules(_missileType, _target, _launchSpeed, _power, _fuseDelay, _destroyTime, this.gameObject); //assign missle properties 
+                _rocket.GetComponent<GameDevHQ.FileBase.Missile_Launcher.Missile.Missile>().AssignMissleRules(_missileType, _target, _launchSpeed, _power, _fuseDelay, _destroyTime, this.gameObject); //assign missle properties 
 
                 _misslePositions[0].SetActive(false); //turn off the rocket sitting in the turret to make it look like it fired
 
@@ -99,8 +105,40 @@ namespace GameDevHQ.FileBase.Missile_Launcher
 
                 yield return new WaitForSeconds(_reloadTime); //wait for reload time
                 _misslePositions[0].SetActive(true); //enable fake rocket to show ready to fire
-            
-            _launched = false; //set launch bool to false
+
+                _launched = false; //set launch bool to false
+            }
+            else if(_towerType == TowerType.Dual_Missile_Turret)
+            {
+                _rocketLeft = SpawnManager.Instance.RequestMissile(this.gameObject); //instantiate a rocket
+                _rocketRight = SpawnManager.Instance.RequestMissile(this.gameObject); //instantiate a rocket
+
+                _rocketLeft.transform.parent = _misslePositionsLeft[0].transform; //set the rockets parent to the missle launch position 
+                _rocketRight.transform.parent = _misslePositionsRight[0].transform; //set the rockets parent to the missle launch position 
+
+                _rocketLeft.transform.localPosition = Vector3.zero; //set the rocket position values to zero
+                _rocketRight.transform.localPosition = Vector3.zero; //set the rocket position values to zero
+
+                _rocketLeft.transform.localEulerAngles = new Vector3(0, 0, 0); //set the rotation values to be properly aligned with the rockets forward direction
+                _rocketRight.transform.localEulerAngles = new Vector3(0, 0, 0); //set the rotation values to be properly aligned with the rockets forward direction
+
+                _rocketLeft.transform.parent = null; //set the rocket parent to null
+                _rocketRight.transform.parent = null; //set the rocket parent to null
+
+                _rocketLeft.GetComponent<GameDevHQ.FileBase.Missile_Launcher.Missile.Missile>().AssignMissleRules(_missileType, _target, _launchSpeed, _power, _fuseDelay, _destroyTime, this.gameObject); //assign missle properties 
+                _rocketRight.GetComponent<GameDevHQ.FileBase.Missile_Launcher.Missile.Missile>().AssignMissleRules(_missileType, _target, _launchSpeed, _power, _fuseDelay, _destroyTime, this.gameObject); //assign missle properties 
+
+                _misslePositionsLeft[0].SetActive(false); //turn off the rocket sitting in the turret to make it look like it fired
+                _misslePositionsRight[0].SetActive(false); //turn off the rocket sitting in the turret to make it look like it fired
+
+                yield return new WaitForSeconds(_fireDelay); //wait for the firedelay
+
+                yield return new WaitForSeconds(_reloadTime); //wait for reload time
+                _misslePositionsLeft[0].SetActive(true); //enable fake rocket to show ready to fire
+                _misslePositionsRight[0].SetActive(true); //enable fake rocket to show ready to fire
+
+                _launched = false; //set launch bool to false
+            }
         }
         Transform SetEnemyTarget()
         {
@@ -162,7 +200,16 @@ namespace GameDevHQ.FileBase.Missile_Launcher
             if(_target != null)
                 _attackQueue.Remove(_target.gameObject);
             _target = null;
-            rocket.GetComponent<GameDevHQ.FileBase.Missile_Launcher.Missile.Missile>().Hide();
+            if(_towerType == TowerType.Missile_Turret)
+            {
+                _rocket.GetComponent<GameDevHQ.FileBase.Missile_Launcher.Missile.Missile>().Hide();
+            }
+            else if (_towerType == TowerType.Dual_Missile_Turret)
+            {
+                _rocketLeft.GetComponent<GameDevHQ.FileBase.Missile_Launcher.Missile.Missile>().Hide();
+                _rocketRight.GetComponent<GameDevHQ.FileBase.Missile_Launcher.Missile.Missile>().Hide();
+            }
+            
         }
         public void Hide()
         {

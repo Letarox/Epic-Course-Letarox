@@ -14,6 +14,8 @@ public class TowerSpot : MonoBehaviour
     private GameObject _tower = null;
     private ITower _towerScript;
 
+    private GameObject _upgradeGattlingGun;
+
     [System.Obsolete]
     void Start()
     {
@@ -114,6 +116,7 @@ public class TowerSpot : MonoBehaviour
                 if(availableSpot == false)
                 {
                     GameManager.Instance.RemoveFunds(iTower.WarfundCost);
+                    UIMananger.Instance.UpdateWarfunds(GameManager.Instance.GetFunds());
                     SetTower(newTower);
                 }
                 else
@@ -126,6 +129,10 @@ public class TowerSpot : MonoBehaviour
         else if (_isUsed == true && removing == true)
         {
             SellTower();
+        }
+        else if(_isUsed == true && removing == false)
+        {
+
         }
     }
 
@@ -158,6 +165,7 @@ public class TowerSpot : MonoBehaviour
     public void SellTower()
     {
         GameManager.Instance.AddFunds(_towerScript.WarfundCost);
+        UIMananger.Instance.UpdateWarfunds(GameManager.Instance.GetFunds());
         _isUsed = false;
         _towerScript.Hide();
         _tower = null;

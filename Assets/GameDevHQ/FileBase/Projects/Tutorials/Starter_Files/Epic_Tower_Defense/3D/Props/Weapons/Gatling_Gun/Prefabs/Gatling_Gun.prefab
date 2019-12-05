@@ -5050,7 +5050,7 @@ Transform:
   m_GameObject: {fileID: 1425032208015248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_Children:
   - {fileID: 4445333471610312}
   - {fileID: 4269261858695514}
@@ -5073,6 +5073,10 @@ MonoBehaviour:
   Muzzle_Flash: {fileID: 1905276477678454}
   bulletCasings: {fileID: 198239830521320308}
   fireSound: {fileID: 8300000, guid: 08e0cb88300e54b09aa0deb684c3a3de, type: 3}
+  _gunBarrels: []
+  _muzzleFlash: []
+  _bulletCasings: []
+  _fireSound: {fileID: 0}
   _attackQueue: []
   _playerBase: {fileID: 0}
   _towerType: 0

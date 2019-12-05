@@ -59,9 +59,7 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
         void Update()
         {
             _destroyTimer -= Time.deltaTime;
-            if (_target.gameObject.activeInHierarchy == false)
-                Hide();
-            else if (_destroyTimer <= 0f)
+            if (_destroyTimer <= 0f)
                 Hide();
         }
 
@@ -135,7 +133,7 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
 
         private void OnCollisionEnter(Collision other)
         {
-            if(other.transform.Equals(_target) && other.gameObject.activeInHierarchy == true)
+            if(other.transform.Equals(_target))
             {
                 //_parentTower.Shoot(other.gameObject);
                 if (_explosionPrefab != null)
@@ -157,13 +155,10 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
 
         void ExplosionDamage(Vector3 center, float radius)
         {
-            Collider[] enemiesHit = Physics.OverlapSphere(center, radius);
+            Collider[] enemiesHit = Physics.OverlapSphere(center, radius, 1 << 9); //Layer 9 is the Enemy layer
             for(int i = 0; i < enemiesHit.Length; i++)
             {
-                if (enemiesHit[i].tag == "Enemy")
-                {
-                    _parentTower.Shoot(enemiesHit[i].gameObject);
-                }
+                _parentTower.Shoot(enemiesHit[i].gameObject);
             }
         }
     }

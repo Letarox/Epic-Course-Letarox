@@ -73,7 +73,6 @@ public class AI : MonoBehaviour, IDamageble
     public void Hide()
     {
         this.gameObject.SetActive(false);
-        transform.position = SpawnManager.Instance.GetSpawnLocation();
     }
 
     public int GetEnemyType()
@@ -91,6 +90,7 @@ public class AI : MonoBehaviour, IDamageble
             {
                 towerScript.CleanTarget();
                 GameManager.Instance.AddFunds(Warfunds);
+                UIMananger.Instance.UpdateWarfunds(GameManager.Instance.GetFunds());
                 if(this.gameObject.activeInHierarchy == true)
                     StartCoroutine(DeathRoutine());
             }

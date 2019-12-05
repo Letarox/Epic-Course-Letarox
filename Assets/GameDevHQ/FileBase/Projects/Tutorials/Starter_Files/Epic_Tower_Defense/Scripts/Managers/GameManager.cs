@@ -28,6 +28,16 @@ public class GameManager : MonoSingleton<GameManager>
                     towerAI.WarfundCost = 150;
                     towerAI.FireRate = 2.5f;
                     break;
+                case 2: //Dual Gatting Gun
+                    towerAI.Damage = 20;
+                    towerAI.WarfundCost = 400;
+                    towerAI.FireRate = 0.25f;
+                    break;
+                case 3: //Dual Missile Turret
+                    towerAI.Damage = 60;
+                    towerAI.WarfundCost = 500;
+                    towerAI.FireRate = 2.25f;
+                    break;
                 default:
                     break;
             }
