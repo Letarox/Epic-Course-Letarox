@@ -17,6 +17,12 @@ public class AI : MonoBehaviour, IDamageble
     [SerializeField]
     private EnemyType _enemyType;
 
+    private GameObject _fireTarget;
+
+    [SerializeField]
+    private GameObject _body;
+    Vector3 _defaultRot;
+
     [SerializeField]
     private GameObject[] _explosionPrefab;
 
@@ -31,6 +37,7 @@ public class AI : MonoBehaviour, IDamageble
         Big_Mech
     }
 
+    [System.Obsolete]
     void OnEnable()
     {
         GameManager.Instance.SetEnemyStats(this.gameObject);
@@ -52,6 +59,8 @@ public class AI : MonoBehaviour, IDamageble
 
         if (_collider == null)
             Debug.LogError("Box Collider is NULL on " + transform.name);
+
+        _defaultRot = _body.transform.localEulerAngles;
 
         transform.position = SpawnManager.Instance.GetSpawnLocation();
 
@@ -106,5 +115,48 @@ public class AI : MonoBehaviour, IDamageble
         yield return new WaitForSeconds(delay);
         Explode();
         Hide();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (_fireTarget == null)
+        {
+            if (other.tag == "Player")
+            {
+                _target = other.gameObject;
+            }
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if(_fireTarget == null)
+        {
+            _fireTarget = other.gameObject;
+        }
+        else
+        {
+            Vector3 direction = _fireTarget.transform.position - transform.position;
+            if (_enemyType == EnemyType.Tall_Mech)
+                _body.transform.LookAt(direction);
+            else if(_enemyType == EnemyType.Big_Mech)
+                _body.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+            Vector3 rot = _body.transform.localEulerAngles;
+            rot.x = 0f;
+            if (_enemyType == EnemyType.Tall_Mech)
+                rot.y = 0f;
+            _body.transform.localEulerAngles = rot;
+            _anim.SetTrigger("Shoot");
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.Equals(_fireTarget))
+        {
+            _fireTarget = null;
+            _anim.ResetTrigger("Shoot");
+            _body.transform.localEulerAngles = _defaultRot;
+        }
     }
 }

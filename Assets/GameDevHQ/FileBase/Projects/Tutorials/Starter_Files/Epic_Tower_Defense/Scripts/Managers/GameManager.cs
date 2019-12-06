@@ -70,8 +70,7 @@ public class GameManager : MonoSingleton<GameManager>
                 default:
                     break;
             }
-        }
-        
+        }        
     }
 
     public void AddFunds(int fundsAmount)

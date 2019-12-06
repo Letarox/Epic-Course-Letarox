@@ -21,6 +21,8 @@ public class UIMananger : MonoSingleton<UIMananger>
     private int _currentTowerWorth;
     private GameObject _currentSpot;
 
+    private GameObject _currentDisplay;
+
     private Button _dualGattlingButton, _dualMissileTurretButton;
 
     void OnEnable()
@@ -118,9 +120,12 @@ public class UIMananger : MonoSingleton<UIMananger>
 
     public void DismantleWeapon(bool isRemoving)
     {
-        if(isRemoving == true)
+        if (_currentDisplay != null)
+            _currentDisplay.SetActive(false);
+        if (isRemoving == true)
         {
-            _dismantleWeapon.SetActive(true);
+            _currentDisplay = _dismantleWeapon;
+            _currentDisplay.SetActive(true);
             _dismantleWeapon.GetComponentInChildren<Text>().text = _currentTowerWorth.ToString();
         }
         else
@@ -146,26 +151,27 @@ public class UIMananger : MonoSingleton<UIMananger>
 
     public void DisplayGattlingGunUpgrade()
     {
-        if (_upgradeGattling.activeInHierarchy == false)
+        if (_currentDisplay != null)
+            _currentDisplay.SetActive(false);
+        _currentDisplay = _upgradeDualGattlingGun;
+        _currentDisplay.SetActive(true);
+       /* if (_upgradeGattling.activeInHierarchy == false)
             _upgradeDualGattlingGun.SetActive(true);
         if (_upgradeMissile.activeInHierarchy == true)
-            _upgradeDualMissileTurret.SetActive(false);
+            _upgradeDualMissileTurret.SetActive(false);*/
     }
 
     public void DisplayMissileTurretUpgrade()
     {
-        if (_upgradeGattling.activeInHierarchy == true)
-            _upgradeDualGattlingGun.SetActive(false);
-        if (_upgradeMissile.activeInHierarchy == false)
-            _upgradeDualMissileTurret.SetActive(true);
+        if (_currentDisplay != null)
+            _currentDisplay.SetActive(false);
+        _currentDisplay = _upgradeDualMissileTurret;
+        _currentDisplay.SetActive(true);
     }
 
     public void DeclineUpgrade()
     {
-        if(_upgradeGattling == true)
-            _upgradeDualGattlingGun.SetActive(false);
-        if(_upgradeMissile == true)
-            _upgradeDualMissileTurret.SetActive(false);
+        _currentDisplay.SetActive(false);
     }
 
     void OnClickUpgrade()
@@ -174,8 +180,20 @@ public class UIMananger : MonoSingleton<UIMananger>
         if (spotScript != null)
             spotScript.UpgradeTower();
         if (_upgradeGattling.activeInHierarchy == true)
+        {
+            _currentTowerWorth = 320;
             _upgradeDualGattlingGun.SetActive(false);
-        else if (_upgradeMissile.activeInHierarchy == true)
+            HideAllImages();
+            _removeWeapons[2].SetActive(true);
+        }
+            
+        if (_upgradeMissile.activeInHierarchy == true)
+        {
+            _currentTowerWorth = 400;
             _upgradeDualMissileTurret.SetActive(false);
+            HideAllImages();
+            _removeWeapons[3].SetActive(true);
+        }
+            
     }
 }

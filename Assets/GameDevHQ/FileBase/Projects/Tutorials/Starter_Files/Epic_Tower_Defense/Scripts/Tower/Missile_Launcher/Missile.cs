@@ -54,11 +54,12 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
             _fuseOut = true; //set fuseOut to true
             _launched = true; //set the launch bool to true 
             _thrust = false; //set thrust bool to false
-
         }
         void Update()
         {
             _destroyTimer -= Time.deltaTime;
+            if (_target == null)
+                _destroyTimer = 0f;
             if (_destroyTimer <= 0f)
                 Hide();
         }
@@ -108,7 +109,6 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
 
                     _rigidbody.angularVelocity = turnAmount * _power; //apply angular velocity
                     _rigidbody.velocity = transform.forward * _power; //apply forward velocity
-
                 }
             }
 
@@ -139,7 +139,7 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
                 if (_explosionPrefab != null)
                 {
                     GameObject explosion = SpawnManager.Instance.RequestExplosion(0, this.gameObject); //instantiate explosion
-                    float radius = 1f;
+                    float radius = 1.5f;
                     ExplosionDamage(this.transform.position, radius);
                 }
                 Hide();
