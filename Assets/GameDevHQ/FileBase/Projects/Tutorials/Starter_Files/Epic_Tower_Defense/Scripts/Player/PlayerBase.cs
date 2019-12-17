@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerBase : MonoBehaviour
 {
+    public static Action OnTakingDamage;
     private void Start()
     {
 
@@ -17,6 +19,8 @@ public class PlayerBase : MonoBehaviour
             if(enemyAI != null)
             {
                 GameManager.Instance.ChangeLives(enemyAI.LivesCost);
+                if (OnTakingDamage != null)
+                    OnTakingDamage();
                 enemyAI.Hide();
             }            
         }

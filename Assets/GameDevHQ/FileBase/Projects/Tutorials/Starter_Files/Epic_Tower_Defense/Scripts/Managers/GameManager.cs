@@ -7,7 +7,7 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField]
     private int _warFunds;
     [SerializeField]
-    private int _lives = 5;
+    private int _lives = 20;
 
     //private bool _isGameOver = false;
     public void SetTowerStats(GameObject tower)
@@ -94,5 +94,9 @@ public class GameManager : MonoSingleton<GameManager>
     public int GetFunds()
     {
         return _warFunds;
+    }
+    public int GetLives()
+    {
+        return _lives;
     }
 }

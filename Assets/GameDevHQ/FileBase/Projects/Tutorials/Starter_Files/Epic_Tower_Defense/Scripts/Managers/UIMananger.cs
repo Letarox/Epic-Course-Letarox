@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIMananger : MonoSingleton<UIMananger>
 {
     [SerializeField]
-    private Text _warfundsText;
+    private Text _warfundsText, _statusText, _livesText;
     [SerializeField]
     private GameObject[] _weapons;
     [SerializeField]
@@ -25,16 +26,22 @@ public class UIMananger : MonoSingleton<UIMananger>
 
     private Button _dualGattlingButton, _dualMissileTurretButton;
 
+    private bool _isPaused = false;
+
     void OnEnable()
     {
         TowerSpot.OnSpotClick += UpdateTowerInformationDisplay;
         TowerPlacement.OnCancel += ResetInformationDisplay;
+        PlayerBase.OnTakingDamage += StatusUpdateDisplay;
+        PlayerBase.OnTakingDamage += UpdateLivesDisplay;
     }
 
     void OnDisable()
     {
         TowerSpot.OnSpotClick -= UpdateTowerInformationDisplay;
         TowerPlacement.OnCancel -= ResetInformationDisplay;
+        PlayerBase.OnTakingDamage -= StatusUpdateDisplay;
+        PlayerBase.OnTakingDamage -= UpdateLivesDisplay;
     }
 
     [System.Obsolete]
@@ -52,6 +59,8 @@ public class UIMananger : MonoSingleton<UIMananger>
 
         _dualGattlingButton.onClick.AddListener(OnClickUpgrade);
         _dualMissileTurretButton.onClick.AddListener(OnClickUpgrade);
+        UpdateLivesDisplay();
+        StatusUpdateDisplay();
     }
 
     // Update is called once per frame
@@ -193,7 +202,52 @@ public class UIMananger : MonoSingleton<UIMananger>
             _upgradeDualMissileTurret.SetActive(false);
             HideAllImages();
             _removeWeapons[3].SetActive(true);
+        }            
+    }
+    public void StatusUpdateDisplay()
+    {
+        int livesAmount = GameManager.Instance.GetLives();
+        if (livesAmount > 15)
+        {
+            Color textColor = new Color(1f, 0.8196079f, 0.5411765f, 1f);
+            _statusText.text = "Good";
+            _statusText.color = textColor;
         }
-            
+        else if(livesAmount > 5)
+        {
+            Color textColor = new Color(1f, 0.682353f, 0.5411765f, 1f);
+            _statusText.text = "Average";
+            _statusText.color = textColor;
+        }
+        else
+        {
+            Color textColor = new Color(1f, 0.2235294f, 0.2039216f, 1f);
+            _statusText.text = "Bad";
+            _statusText.color = textColor;
+        }
+    }
+    public void UpdateLivesDisplay()
+    {
+        _livesText.text = GameManager.Instance.GetLives().ToString();
+    }
+    public void PauseGame()
+    {
+        _isPaused = true;
+        Time.timeScale = 0;
+    }
+    public void ResumeGame()
+    {
+        _isPaused = false;
+        Time.timeScale = 1;
+    }
+    public void FastForward()
+    {
+        if(_isPaused == false)
+            Time.timeScale = 2;
+    }
+    public void RestartGame()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 }
