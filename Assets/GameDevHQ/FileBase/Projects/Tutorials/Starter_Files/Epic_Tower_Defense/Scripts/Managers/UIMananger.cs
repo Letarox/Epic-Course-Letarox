@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class UIMananger : MonoSingleton<UIMananger>
 {
     [SerializeField]
-    private Text _warfundsText, _statusText, _livesText;
+    private Text _warfundsText, _statusText, _livesText, _gameStatusText;
     [SerializeField]
     private GameObject[] _weapons;
     [SerializeField]
@@ -27,6 +27,12 @@ public class UIMananger : MonoSingleton<UIMananger>
     private Button _dualGattlingButton, _dualMissileTurretButton;
 
     private bool _isPaused = false;
+    private bool _gameStarted = false;
+
+    private int _fastForwardSpeed;
+
+    [SerializeField]
+    private GameObject _gameStatus;
 
     void OnEnable()
     {
@@ -76,14 +82,22 @@ public class UIMananger : MonoSingleton<UIMananger>
 
     public void ResetInformationDisplay()
     {
-        HideAllImages();
-        _dismantleWeapon.SetActive(false);
-        _upgradeDualGattlingGun.SetActive(false);
-        _upgradeDualMissileTurret.SetActive(false);
-        _upgradeGattling.SetActive(false);
-        _upgradeMissile.SetActive(false);
-        _weapons[0].SetActive(true);
-        _weapons[1].SetActive(true);
+        if(_currentDisplay != null)
+        {
+            _currentDisplay.SetActive(false);
+            _currentDisplay = null;
+        }
+        else
+        {
+            HideAllImages();
+            _dismantleWeapon.SetActive(false);
+            _upgradeDualGattlingGun.SetActive(false);
+            _upgradeDualMissileTurret.SetActive(false);
+            _upgradeGattling.SetActive(false);
+            _upgradeMissile.SetActive(false);
+            _weapons[0].SetActive(true);
+            _weapons[1].SetActive(true);
+        }        
     }
 
     public void UpdateTowerInformationDisplay(int towerType, int towerCost, GameObject spot)
@@ -237,17 +251,50 @@ public class UIMananger : MonoSingleton<UIMananger>
     }
     public void ResumeGame()
     {
-        _isPaused = false;
-        Time.timeScale = 1;
+        if(_gameStarted == false)
+        {
+            _gameStarted = true;
+            StartCoroutine(GameStartRoutine());
+        }
+        else
+        {
+            _isPaused = false;
+            _fastForwardSpeed = 1;
+            Time.timeScale = _fastForwardSpeed;
+        }        
     }
     public void FastForward()
     {
         if(_isPaused == false)
-            Time.timeScale = 2;
+        {
+            _fastForwardSpeed += 2;
+            if (_fastForwardSpeed >= 8)
+                _fastForwardSpeed = 8;
+            Time.timeScale = _fastForwardSpeed;
+        }            
     }
     public void RestartGame()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
+    }
+    IEnumerator GameStartRoutine()
+    {
+        _gameStatus.SetActive(true);
+        _gameStatusText.gameObject.SetActive(true);
+        for(int i = 3; i > 0; i--)
+        {
+            _gameStatusText.text = "GAME STARTING IN " + i.ToString();
+            yield return new WaitForSeconds(1f);
+        }
+        _gameStatus.SetActive(false);
+        _gameStatusText.gameObject.SetActive(false);
+        SpawnManager.Instance.StartGame();
+    }
+    public void GameOver()
+    {
+        _gameStatus.SetActive(true);
+        _gameStatusText.gameObject.SetActive(true);
+        _gameStatusText.text = "GAME OVER";
     }
 }

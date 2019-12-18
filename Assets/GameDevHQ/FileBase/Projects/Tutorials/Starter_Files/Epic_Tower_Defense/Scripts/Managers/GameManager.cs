@@ -88,7 +88,10 @@ public class GameManager : MonoSingleton<GameManager>
         _lives -= livesAmount;
 
         if (_lives <= 0)
+        {
             Time.timeScale = 0;
+            UIMananger.Instance.GameOver();
+        }            
     }
 
     public int GetFunds()

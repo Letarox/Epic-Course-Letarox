@@ -53,12 +53,9 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         _missilePool = GenerateMissiles(_missilesInitially);
     }
 
-    void Update()
+    public void StartGame()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(WaveSpawn());
-        }
+        StartCoroutine(WaveSpawn());
     }
 
     IEnumerator WaveSpawn()
