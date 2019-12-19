@@ -26,11 +26,6 @@ public class UIMananger : MonoSingleton<UIMananger>
 
     private Button _dualGattlingButton, _dualMissileTurretButton;
 
-    private bool _isPaused = false;
-    private bool _gameStarted = false;
-
-    private int _fastForwardSpeed;
-
     [SerializeField]
     private GameObject _gameStatus;
 
@@ -169,7 +164,7 @@ public class UIMananger : MonoSingleton<UIMananger>
 
     public void DeclineSellingTower()
     {
-        _dismantleWeapon.SetActive(false);
+        ResetInformationDisplay();
     }
 
     public void DisplayGattlingGunUpgrade()
@@ -194,7 +189,7 @@ public class UIMananger : MonoSingleton<UIMananger>
 
     public void DeclineUpgrade()
     {
-        _currentDisplay.SetActive(false);
+        ResetInformationDisplay();
     }
 
     void OnClickUpgrade()
@@ -244,57 +239,31 @@ public class UIMananger : MonoSingleton<UIMananger>
     {
         _livesText.text = GameManager.Instance.GetLives().ToString();
     }
-    public void PauseGame()
+   
+    public void GameStart()
     {
-        _isPaused = true;
-        Time.timeScale = 0;
-    }
-    public void ResumeGame()
-    {
-        if(_gameStarted == false)
-        {
-            _gameStarted = true;
-            StartCoroutine(GameStartRoutine());
-        }
-        else
-        {
-            _isPaused = false;
-            _fastForwardSpeed = 1;
-            Time.timeScale = _fastForwardSpeed;
-        }        
-    }
-    public void FastForward()
-    {
-        if(_isPaused == false)
-        {
-            _fastForwardSpeed += 2;
-            if (_fastForwardSpeed >= 8)
-                _fastForwardSpeed = 8;
-            Time.timeScale = _fastForwardSpeed;
-        }            
-    }
-    public void RestartGame()
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
-    }
-    IEnumerator GameStartRoutine()
-    {
-        _gameStatus.SetActive(true);
-        _gameStatusText.gameObject.SetActive(true);
-        for(int i = 3; i > 0; i--)
-        {
-            _gameStatusText.text = "GAME STARTING IN " + i.ToString();
-            yield return new WaitForSeconds(1f);
-        }
-        _gameStatus.SetActive(false);
-        _gameStatusText.gameObject.SetActive(false);
-        SpawnManager.Instance.StartGame();
+        StartCoroutine(GameStartRoutine());
     }
     public void GameOver()
     {
         _gameStatus.SetActive(true);
         _gameStatusText.gameObject.SetActive(true);
         _gameStatusText.text = "GAME OVER";
+    }
+    public IEnumerator GameStartRoutine()
+    {
+        _gameStatus.SetActive(true);
+        _gameStatusText.gameObject.SetActive(true);
+        for (int i = 3; i > 0; i--)
+        {
+            _gameStatusText.text = "GAME STARTING IN " + i.ToString();
+            yield return new WaitForSeconds(1f);
+        }
+        _gameStatusText.text = "GAME STARTING NOW";
+        yield return new WaitForSeconds(0.5f);
+        _gameStatus.SetActive(false);
+        _gameStatusText.gameObject.SetActive(false);
+        SpawnManager.Instance.StartGame();
+        GameManager.Instance.StartGame();
     }
 }

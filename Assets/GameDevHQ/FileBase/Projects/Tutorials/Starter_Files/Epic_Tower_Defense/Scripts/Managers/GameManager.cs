@@ -9,6 +9,10 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField]
     private int _lives = 20;
 
+    private bool _isPaused = false;
+    private bool _gameStarted = false;
+    private int _fastForwardSpeed = 1;
+
     //private bool _isGameOver = false;
     public void SetTowerStats(GameObject tower)
     {
@@ -92,6 +96,48 @@ public class GameManager : MonoSingleton<GameManager>
             Time.timeScale = 0;
             UIMananger.Instance.GameOver();
         }            
+    }
+
+    public void StartGame()
+    {
+        _gameStarted = true;
+    }
+
+    public void ControlTime(int utility)
+    {
+        switch(utility)
+        {
+            case 0:
+                if(_gameStarted == true)
+                {
+                    _isPaused = true;
+                    Time.timeScale = 0;
+                }                
+                break;
+            case 1:
+                if (_gameStarted == false)
+                {
+                    UIMananger.Instance.GameStart();
+                }
+                else
+                {
+                    _isPaused = false;
+                    _fastForwardSpeed = 1;
+                    Time.timeScale = _fastForwardSpeed;
+                }
+                break;
+            case 2:
+                if (_isPaused == false && _gameStarted == true)
+                {
+                    _fastForwardSpeed += 2;
+                    if (_fastForwardSpeed >= 8)
+                        _fastForwardSpeed = 8;
+                    Time.timeScale = _fastForwardSpeed;
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     public int GetFunds()
