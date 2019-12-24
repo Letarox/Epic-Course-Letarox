@@ -67,14 +67,6 @@ namespace GameDevHQ.FileBase.Missile_Launcher
             Dual_Gattling_Gun, // 2
             Dual_Missile_Turret // 3
         }
-        public void Shoot(GameObject target)
-        {
-            IDamageble targetScript = target.GetComponent<IDamageble>();
-            if(targetScript != null)
-            {
-                targetScript.Damage(this.gameObject,Damage);
-            }
-        }
 
         public int GetTowerType()
         {
@@ -165,7 +157,7 @@ namespace GameDevHQ.FileBase.Missile_Launcher
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Enemy")
+            if (other.CompareTag("Enemy"))
             {
                 _attackQueue.Add(other.gameObject);
                 if (_target == null)
@@ -187,7 +179,7 @@ namespace GameDevHQ.FileBase.Missile_Launcher
 
         void OnTriggerExit(Collider other)
         {
-            if (other.tag == "Enemy")
+            if (other.CompareTag("Enemy"))
             {
                 _attackQueue.Remove(other.gameObject);
                 if(_target != null)

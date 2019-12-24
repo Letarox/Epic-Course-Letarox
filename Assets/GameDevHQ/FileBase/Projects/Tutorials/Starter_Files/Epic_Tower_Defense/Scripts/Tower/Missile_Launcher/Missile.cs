@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using S = System;
+
 /*
  *@author GameDevHQ 
  * For support, visit gamedevhq.com
@@ -39,6 +41,8 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
         private Transform _target;
 
         private ITower _parentTower;
+
+        public static event S.Action<Collider[], ITower> OnMissileExplode;
 
         IEnumerator Start()
         {
@@ -155,11 +159,10 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
 
         void ExplosionDamage(Vector3 center, float radius)
         {
-            Collider[] enemiesHit = Physics.OverlapSphere(center, radius, 1 << 9); //Layer 9 is the Enemy layer
-            for(int i = 0; i < enemiesHit.Length; i++)
-            {
-                _parentTower.Shoot(enemiesHit[i].gameObject);
-            }
+            Collider[] enemiesHit = new Collider[10];
+            Physics.OverlapSphereNonAlloc(center, radius, enemiesHit, 1 << 9); //Layer 9 is the Enemy layer
+            if (OnMissileExplode != null)
+                OnMissileExplode(enemiesHit, _parentTower);
         }
     }
 }

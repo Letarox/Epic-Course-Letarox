@@ -44,6 +44,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     //private GameObject _towerContainer;
     
     private int _waveNumber = 1;
+    private WaitForSeconds _waveSpawnDelay = new WaitForSeconds(1.5f);
 
     private void Start()
     {
@@ -64,8 +65,8 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         {
             int randomEnemy = Random.Range(0, 2);
             GameObject enemy = RequestEnemy(randomEnemy);
-            yield return new WaitForSeconds(1.5f);
-        }        
+            yield return _waveSpawnDelay;
+        }
     }
 
     List<GameObject> GenerateEnemies(int amountOfEnemies)

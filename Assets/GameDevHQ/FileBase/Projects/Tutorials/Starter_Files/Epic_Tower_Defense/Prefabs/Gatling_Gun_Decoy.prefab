@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 12891199694326467}
   - component: {fileID: 24601788308170725}
   - component: {fileID: 31651464836484071}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Turret_Bottom_Of_Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 12713056688059759}
   - component: {fileID: 23644232245573391}
   - component: {fileID: 32058335621407115}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Mini_Gun_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 12861463517016071}
   - component: {fileID: 24528546153747555}
   - component: {fileID: 31788352855705593}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Barrels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 12683323028147019}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Rotate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 12409465143118517}
   - component: {fileID: 24000703116898963}
   - component: {fileID: 31601355963105697}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Barrel_Tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 14536544378732307}
   - component: {fileID: 24584284538988479}
   - component: {fileID: 31936121148467581}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Mini_Gun_Braces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -432,7 +432,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 14599597995074057}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Barrel_to_Spin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -467,7 +467,7 @@ GameObject:
   - component: {fileID: 12928836808976345}
   - component: {fileID: 24055868130485943}
   - component: {fileID: 31921788785102837}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Turret_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -543,7 +543,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 14269176266805703}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Gatling_Gun_Decoy
   m_TagString: Player
   m_Icon: {fileID: 0}

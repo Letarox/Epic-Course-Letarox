@@ -186,7 +186,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isUsed: 0
-  _upgradeGattlingGun: {fileID: 0}
 --- !u!1001 &3095947971850359309
 PrefabInstance:
   m_ObjectHideFlags: 0

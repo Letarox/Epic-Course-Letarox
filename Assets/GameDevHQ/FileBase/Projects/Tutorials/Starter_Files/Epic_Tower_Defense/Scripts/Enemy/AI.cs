@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using GameDevHQ.FileBase.Missile_Launcher.Missile;
 
 public class AI : MonoBehaviour, IDamageble
 {
@@ -12,7 +13,7 @@ public class AI : MonoBehaviour, IDamageble
     [SerializeField]
     private float _speed;
     private Animator _anim;
-    private BoxCollider _collider;
+    private Collider _collider;
 
     [SerializeField]
     private EnemyType _enemyType;
@@ -44,7 +45,7 @@ public class AI : MonoBehaviour, IDamageble
         _agent = GetComponent<NavMeshAgent>();
         _target = GameObject.Find("Player_Base");
         _anim = GetComponent<Animator>();
-        _collider = GetComponent<BoxCollider>();
+        _collider = GetComponent<Collider>();
 
         if (_agent == null)
             Debug.LogError("NavMesh Agent is NULL on " + transform.name);
@@ -67,6 +68,12 @@ public class AI : MonoBehaviour, IDamageble
         _collider.enabled = true;
         _agent.speed = Speed;
         _speed = _agent.speed;
+        Missile.OnMissileExplode += OnMissileDamageReceived;
+    }
+
+    void OnDisable()
+    {
+        Missile.OnMissileExplode -= OnMissileDamageReceived;
     }
 
     void OnValidate()
@@ -79,6 +86,17 @@ public class AI : MonoBehaviour, IDamageble
         GameObject explosion = SpawnManager.Instance.RequestExplosion((1+(int)_enemyType), this.gameObject); //Base is 1 + type since the small explosion is being used by the missile
     }
 
+    void OnMissileDamageReceived(Collider[] enemiesHit, ITower source)
+    {
+        foreach(var enemy in enemiesHit)
+        {
+            if (enemy == this._collider)
+            {
+                Damage(source.Damage, source);
+            }
+        }
+    }
+
     public void Hide()
     {
         this.gameObject.SetActive(false);
@@ -89,15 +107,30 @@ public class AI : MonoBehaviour, IDamageble
         return (int)_enemyType;
     }
 
-    public void Damage(GameObject source, int damageAmount)
+    public void Damage(int explosionRadiusDamage, ITower source)
+    {
+        Health -= explosionRadiusDamage;
+        if (Health <= 0)
+        {
+            if (source != null)
+            {
+                source.CleanTarget();
+                GameManager.Instance.AddFunds(Warfunds);
+                UIMananger.Instance.UpdateWarfunds(GameManager.Instance.GetFunds());
+                if (this.gameObject.activeInHierarchy == true)
+                    StartCoroutine(DeathRoutine());
+            }
+        }
+    }
+
+    public void Damage(ITower source, int damageAmount)
     {
         Health -= damageAmount;
         if (Health <= 0)
         {
-            ITower towerScript = source.GetComponent<ITower>();
-            if(towerScript != null)
+            if(source != null)
             {
-                towerScript.CleanTarget();
+                source.CleanTarget();
                 GameManager.Instance.AddFunds(Warfunds);
                 UIMananger.Instance.UpdateWarfunds(GameManager.Instance.GetFunds());
                 if(this.gameObject.activeInHierarchy == true)

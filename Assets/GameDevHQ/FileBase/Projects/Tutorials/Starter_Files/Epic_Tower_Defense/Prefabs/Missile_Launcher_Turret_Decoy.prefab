@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6667465830147110713}
   - component: {fileID: 6700919924862906027}
   - component: {fileID: 6690799611288416843}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missle_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 6672094893646861789}
   - component: {fileID: 6701091469512210187}
   - component: {fileID: 6691473954325823277}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missile_Launcher_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6667100744930208595}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: RotY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 6672272167869685851}
   - component: {fileID: 6700634115698081231}
   - component: {fileID: 6690800351697203857}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missle_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 6672103884471176713}
   - component: {fileID: 6700778751391507915}
   - component: {fileID: 6690525889235829515}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Turret_Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 6672160178056126179}
   - component: {fileID: 6700768875275502093}
   - component: {fileID: 6691080107427068247}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missile_Support
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 6672128534091258243}
   - component: {fileID: 6696884662385696805}
   - component: {fileID: 6691133554610327155}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missle_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -515,7 +515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6667172910502097513}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: RotX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 6672173126326795373}
   - component: {fileID: 6701129003508877347}
   - component: {fileID: 6691420107659248653}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missle_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -625,7 +625,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6672295241488462727}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missile_Launcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 6667561645466170505}
   - component: {fileID: 6697004856000503187}
   - component: {fileID: 6690707879396181315}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missle_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -734,7 +734,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6672142926989608869}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missile_Launcher_Turret_Decoy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -767,7 +767,7 @@ GameObject:
   - component: {fileID: 6667261699731585865}
   - component: {fileID: 6700989493910486819}
   - component: {fileID: 6691533209370734105}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -846,7 +846,7 @@ GameObject:
   - component: {fileID: 6672364423176619177}
   - component: {fileID: 6701086473552931379}
   - component: {fileID: 6691476181054476459}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Missle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

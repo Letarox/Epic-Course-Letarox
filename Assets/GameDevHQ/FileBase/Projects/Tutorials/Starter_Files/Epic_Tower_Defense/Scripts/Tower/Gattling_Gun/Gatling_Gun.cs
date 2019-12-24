@@ -47,6 +47,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 
         private GameObject _target = null;
         private IDamageble _targetDamagable;
+        private ITower _towerScript;
 
         private float _canFire = -1f;
 
@@ -70,7 +71,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
             if(_canFire <= Time.time)
             {
                 _canFire = Time.time + FireRate;
-                _targetDamagable.Damage(this.gameObject, Damage);
+                _targetDamagable.Damage(_towerScript, Damage);
             }
         }
 
@@ -93,6 +94,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 
         void Start()
         {
+            _towerScript = GetComponent<ITower>();
             if (_towerType == TowerType.Gattling_Gun)
             {
                 _gunBarrel = GameObject.Find("Barrel_to_Spin").GetComponent<Transform>(); //assigning the transform of the gun barrel to the variable
@@ -201,7 +203,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 
         void OnTriggerEnter(Collider other)
         {
-            if(other.tag == "Enemy")
+            if(other.CompareTag("Enemy"))
             {
                 _attackQueue.Add(other.gameObject);
                 if (_target == null)
@@ -238,7 +240,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 
         void OnTriggerExit(Collider other)
         {
-            if(other.tag == "Enemy")
+            if(other.CompareTag("Enemy"))
             {
                 _attackQueue.Remove(other.gameObject);
                 if (other.gameObject.Equals(_target))

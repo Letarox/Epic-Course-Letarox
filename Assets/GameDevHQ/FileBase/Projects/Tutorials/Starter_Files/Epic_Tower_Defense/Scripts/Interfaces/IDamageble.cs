@@ -8,5 +8,5 @@ public interface IDamageble
     int Warfunds { get; set; }
     int LivesCost { get; set; }
     float Speed { get; set; }
-    void Damage(GameObject source, int damageAmount);
+    void Damage(ITower source, int damageAmount);
 }
