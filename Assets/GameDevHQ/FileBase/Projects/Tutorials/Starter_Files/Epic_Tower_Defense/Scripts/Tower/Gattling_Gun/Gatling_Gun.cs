@@ -101,6 +101,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
                 Muzzle_Flash.SetActive(false); //setting the initial state of the muzzle flash effect to off
                 _audioSource = GetComponent<AudioSource>(); //ssign the Audio Source to the reference variable
                 _audioSource.playOnAwake = false; //disabling play on awake
+                _audioSource.volume = 0.15f; //makes the sound not annoying
                 _audioSource.loop = true; //making sure our sound effect loops
                 _audioSource.clip = fireSound; //assign the clip to play
             }
@@ -110,6 +111,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
                 _muzzleFlash[1].SetActive(false); //setting the initial state of the muzzle flash effect to off
                 _audioSource = GetComponent<AudioSource>(); //ssign the Audio Source to the reference variable
                 _audioSource.playOnAwake = false; //disabling play on awake
+                _audioSource.volume = 0.15f; //makes the sound not annoying
                 _audioSource.loop = true; //making sure our sound effect loops
                 _audioSource.clip = _fireSound; //assign the clip to play
             }

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class UIMananger : MonoSingleton<UIMananger>
 {
     [SerializeField]
-    private Text _warfundsText, _statusText, _livesText, _gameStatusText;
+    private Text _warfundsText, _statusText, _livesText, _gameStatusText, _waveCount;
     [SerializeField]
     private GameObject[] _weapons;
     [SerializeField]
@@ -18,6 +18,8 @@ public class UIMananger : MonoSingleton<UIMananger>
     private GameObject _upgradeDualGattlingGun, _upgradeDualMissileTurret;
     [SerializeField]
     private GameObject _upgradeGattling, _upgradeMissile;
+
+    private int _waveNumber = 1;
 
     private int _currentTowerWorth;
     private GameObject _currentSpot;
@@ -244,11 +246,24 @@ public class UIMananger : MonoSingleton<UIMananger>
     {
         StartCoroutine(GameStartRoutine());
     }
+
+    public void NextWave()
+    {
+        _waveNumber++;
+        _waveCount.text = _waveNumber.ToString() + " / 10";
+        StartCoroutine(WaveDelayRoutine());
+    }
     public void GameOver()
     {
         _gameStatus.SetActive(true);
         _gameStatusText.gameObject.SetActive(true);
         _gameStatusText.text = "GAME OVER";
+    }
+    public void GameCompleted()
+    {
+        _gameStatus.SetActive(true);
+        _gameStatusText.gameObject.SetActive(true);
+        _gameStatusText.text = "GAME COMPLETED ! YOU BEATED THE GAME !";
     }
     public IEnumerator GameStartRoutine()
     {
@@ -265,5 +280,21 @@ public class UIMananger : MonoSingleton<UIMananger>
         _gameStatusText.gameObject.SetActive(false);
         SpawnManager.Instance.StartGame();
         GameManager.Instance.StartGame();
+    }
+
+    public IEnumerator WaveDelayRoutine()
+    {
+        _gameStatus.SetActive(true);
+        _gameStatusText.gameObject.SetActive(true);
+        for (int i = 10; i > 0; i--)
+        {
+            _gameStatusText.text = "NEXT WAVE STARTING IN " + i.ToString();
+            yield return new WaitForSeconds(1f);
+        }
+        _gameStatusText.text = "NEXT WAVE STARTING NOW";
+        yield return new WaitForSeconds(0.5f);
+        _gameStatus.SetActive(false);
+        _gameStatusText.gameObject.SetActive(false);
+        SpawnManager.Instance.NextWaveSpawn();
     }
 }

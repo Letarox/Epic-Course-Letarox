@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 using GameDevHQ.FileBase.Missile_Launcher.Missile;
+using System;
 
 public class AI : MonoBehaviour, IDamageble
 {
@@ -15,6 +17,8 @@ public class AI : MonoBehaviour, IDamageble
     private Animator _anim;
     private Collider _collider;
 
+    public static event Action onDeath;
+
     [SerializeField]
     private EnemyType _enemyType;
 
@@ -26,6 +30,14 @@ public class AI : MonoBehaviour, IDamageble
 
     [SerializeField]
     private GameObject[] _explosionPrefab;
+
+    [SerializeField]
+    private Slider _slider;
+    [SerializeField]
+    private GameObject _healthBarUI;
+
+    [SerializeField]
+    private float _maxHealth;
 
     public int Health { get; set; }
     public int Warfunds { get; set; }
@@ -69,16 +81,27 @@ public class AI : MonoBehaviour, IDamageble
         _agent.speed = Speed;
         _speed = _agent.speed;
         Missile.OnMissileExplode += OnMissileDamageReceived;
+        _healthBarUI.SetActive(true);
+        Health = (int)_maxHealth;
     }
 
     void OnDisable()
     {
         Missile.OnMissileExplode -= OnMissileDamageReceived;
+        _healthBarUI.SetActive(false);
     }
 
     void OnValidate()
     {
         _agent.speed = _speed;
+    }
+
+    void Update()
+    {
+        if (this.gameObject.activeInHierarchy)
+        {
+            _slider.value = CalculateHealth();
+        }
     }
 
     void Explode()
@@ -100,6 +123,7 @@ public class AI : MonoBehaviour, IDamageble
     public void Hide()
     {
         this.gameObject.SetActive(false);
+        transform.position = SpawnManager.Instance.GetSpawnLocation();
     }
 
     public int GetEnemyType()
@@ -117,6 +141,8 @@ public class AI : MonoBehaviour, IDamageble
                 source.CleanTarget();
                 GameManager.Instance.AddFunds(Warfunds);
                 UIMananger.Instance.UpdateWarfunds(GameManager.Instance.GetFunds());
+                if (onDeath != null)
+                    onDeath();
                 if (this.gameObject.activeInHierarchy == true)
                     StartCoroutine(DeathRoutine());
             }
@@ -133,7 +159,9 @@ public class AI : MonoBehaviour, IDamageble
                 source.CleanTarget();
                 GameManager.Instance.AddFunds(Warfunds);
                 UIMananger.Instance.UpdateWarfunds(GameManager.Instance.GetFunds());
-                if(this.gameObject.activeInHierarchy == true)
+                if (onDeath != null)
+                    onDeath();
+                if (this.gameObject.activeInHierarchy == true)
                     StartCoroutine(DeathRoutine());
             }
         }
@@ -145,7 +173,7 @@ public class AI : MonoBehaviour, IDamageble
         _collider.enabled = false;
         _agent.isStopped = true;
         float delay = _anim.GetCurrentAnimatorClipInfo(0).Length;
-        yield return new WaitForSeconds(delay);
+        yield return delay;
         Explode();
         Hide();
     }
@@ -191,5 +219,10 @@ public class AI : MonoBehaviour, IDamageble
             _anim.ResetTrigger("Shoot");
             _body.transform.localEulerAngles = _defaultRot;
         }
+    }
+
+    float CalculateHealth()
+    {
+        return Health / _maxHealth;
     }
 }

@@ -35,6 +35,9 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     [SerializeField]
     private GameObject _missileContainer;
 
+    [SerializeField]
+    private int _enemiesDead = 0;
+
 
     //[SerializeField]
     //private List<GameObject> _towersPrefabs;
@@ -57,6 +60,16 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     public void StartGame()
     {
         StartCoroutine(WaveSpawn());
+    }
+
+    void OnEnable()
+    {
+        AI.onDeath += WaveCounter;
+    }
+
+    void OnDisable()
+    {
+        AI.onDeath -= WaveCounter;
     }
 
     IEnumerator WaveSpawn()
@@ -189,6 +202,60 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     public void ReAssignParent(GameObject missile)
     {
         missile.transform.parent = _missileContainer.transform;
+    }
+
+    public void NextWaveSpawn()
+    {
+        StartCoroutine(WaveSpawn());
+    }
+
+    void WaveCounter()
+    {
+        _enemiesDead++;
+        switch (_enemiesDead)
+        {
+            case 10:
+                _waveNumber = 2;
+                UIMananger.Instance.NextWave();
+                break;
+            case 30:
+                _waveNumber = 3;
+                UIMananger.Instance.NextWave();
+                break;
+            case 60:
+                _waveNumber = 4;
+                UIMananger.Instance.NextWave();
+                break;
+            case 100:
+                _waveNumber = 5;
+                UIMananger.Instance.NextWave();
+                break;
+            case 150:
+                _waveNumber = 6;
+                UIMananger.Instance.NextWave();
+                break;
+            case 210:
+                _waveNumber = 7;
+                UIMananger.Instance.NextWave();
+                break;
+            case 280:
+                _waveNumber = 8;
+                UIMananger.Instance.NextWave();
+                break;
+            case 360:
+                _waveNumber = 9;
+                UIMananger.Instance.NextWave();
+                break;
+            case 450:
+                _waveNumber = 10;
+                UIMananger.Instance.NextWave();
+                break;
+            case 550:
+                UIMananger.Instance.GameCompleted();
+                break;
+            default:
+                break;
+        }
     }
 
     /*List<GameObject> GenerateTower(int amountOfTowers)

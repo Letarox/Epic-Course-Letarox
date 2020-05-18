@@ -50,6 +50,7 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
             _audioSource = GetComponent<AudioSource>(); //assign the audiosource component
             _audioSource.pitch = Random.Range(0.7f, 1.9f); //randomize the pitch of the rocket audio
             _particle.Play(); //play the particles of the rocket
+            _audioSource.volume = 0.15f; //makes the sound less annoying
             _audioSource.Play(); //play the rocket sound
 
             yield return new WaitForSeconds(_fuseDelay); //wait for the fuse delay
